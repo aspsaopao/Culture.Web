@@ -1,0 +1,46 @@
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <a style="
+        overflow: hidden;
+        display: inline;
+        float: right;
+        margin-top:10px;
+        margin-right: 150px;
+        height: 40px">登录注册</a>
+    </div>
+    <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center">
+
+        <nz-tabset style="color:white;">
+            <nz-tab nzTitle="首页">
+            </nz-tab>
+            <nz-tab nzTitle="手艺资讯">
+            </nz-tab>
+            <nz-tab nzTitle="手艺视界">
+            </nz-tab>
+            <nz-tab nzTitle="手艺好物">
+            </nz-tab>
+            <nz-tab nzTitle="专题策划">
+            </nz-tab>
+            <nz-tab nzTitle="品牌活动">
+            </nz-tab>
+        </nz-tabset>
+
+    </div>
+    <img src="http://www.wodsy.com/upload/2020/10/10/64daf319-d57c-4414-8751-b3a07a39e7cb.png" />
+    <div nz-col nzSpan="24"
+         style="background: url(http://www.wodsy.com/style/images/bg_01.png) repeat-y top left, 
+            url(http://www.wodsy.com/style/images/bg_02.png) repeat-y top right, 
+            url(http://www.wodsy.com/style/images/body_bg.jpg) repeat;
+        height: 1000px;
+        margin-top: -60px;">
+        <nz-carousel nzAutoPlay nzAutoPlaySpeed="2000" style="width: 1100px !important;margin:0 auto;height:200px;">
+            <ng-container *ngFor="let index of list">
+                <div nz-carousel-content>
+
+                </div>
+            </ng-container>
+
+        </nz-carousel>
+
+    </div>
+</div>

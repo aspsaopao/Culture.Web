@@ -1,0 +1,2 @@
+<nz-pagination [nzPageIndex]="page.index" [nzPageSize]="page.pageSize" [nzTotal]="page.count" (nzPageIndexChange)="pageIndex($event)" nzSize="small" nzShowQuickJumper [nzShowTotal]="totalTemplate"></nz-pagination>
+<ng-template #totalTemplate let-total>总{{page.count}}条</ng-template>

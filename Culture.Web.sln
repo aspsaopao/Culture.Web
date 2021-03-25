@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Culture.Web", "Tourism.Web\Culture.Web.csproj", "{E35AFB17-E10B-4A85-85EB-4472E802454D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Culture", "Tourism\Culture.csproj", "{454F13D8-382A-49EF-9D2D-1A77F5C7E5D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Culture.STD", "Tourism.STD\Culture.STD.csproj", "{D9ACAF38-2785-4199-9C05-E214007F013F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "数据库脚本", "数据库脚本", "{22FF0302-2DD0-441D-9F87-28630C845A97}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\admin\Desktop\db_tourism.sql = C:\Users\admin\Desktop\db_tourism.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CultureRazor", "TourismRazor\CultureRazor.csproj", "{8894CEA6-E21F-482D-9989-8A1F51068E25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E35AFB17-E10B-4A85-85EB-4472E802454D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E35AFB17-E10B-4A85-85EB-4472E802454D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E35AFB17-E10B-4A85-85EB-4472E802454D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E35AFB17-E10B-4A85-85EB-4472E802454D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{454F13D8-382A-49EF-9D2D-1A77F5C7E5D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{454F13D8-382A-49EF-9D2D-1A77F5C7E5D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{454F13D8-382A-49EF-9D2D-1A77F5C7E5D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{454F13D8-382A-49EF-9D2D-1A77F5C7E5D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9ACAF38-2785-4199-9C05-E214007F013F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9ACAF38-2785-4199-9C05-E214007F013F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9ACAF38-2785-4199-9C05-E214007F013F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9ACAF38-2785-4199-9C05-E214007F013F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8894CEA6-E21F-482D-9989-8A1F51068E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8894CEA6-E21F-482D-9989-8A1F51068E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8894CEA6-E21F-482D-9989-8A1F51068E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8894CEA6-E21F-482D-9989-8A1F51068E25}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2700F108-5E75-4922-BC84-1538CFBEFDBF}
+	EndGlobalSection
+EndGlobal

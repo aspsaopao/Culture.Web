@@ -1,0 +1,11 @@
+<applayout-layout style="height:100%;" [menuData]="data" [siderWidth]="240" *ngIf="showRouter">
+  <div logo class="logo">
+  </div>
+  <div header class="header">
+    <a nz-button nzType="link" (click)="changePassWord()">修改信息</a>
+    <button nz-button nzType="link" (click)="loginOut()">退出登录</button>
+  </div>
+  <router-outlet>
+  </router-outlet>
+</applayout-layout>
+<ngx-loading [show]="msg.loading" [config]="{ fullScreenBackdrop:true,primaryColour:'#dd0031',secondaryColour:'#006ddd',tertiaryColour:'#dd0031' }"></ngx-loading>

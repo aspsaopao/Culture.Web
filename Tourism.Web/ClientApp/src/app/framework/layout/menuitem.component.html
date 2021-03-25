@@ -1,0 +1,12 @@
+<li nz-menu-item (click)="itemClick()" [nzSelected]="isActive()" *ngIf="children.length==0; else com">
+  <ng-container *ngIf="icon!=''; else span">
+    <i nz-icon [class]="icon"></i>
+    {{title}}
+  </ng-container>
+  <ng-template #span>
+    {{title}}
+  </ng-template>
+</li>
+<ng-template #com>
+  <applayout-menusub [menuData]="menuData" [isRoot]="isRoot"></applayout-menusub>
+</ng-template>

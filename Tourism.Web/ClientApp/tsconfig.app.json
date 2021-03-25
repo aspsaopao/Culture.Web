@@ -1,0 +1,29 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": [
+      "node",
+      "jquery",
+      "amap-js-api",
+      "amap-js-api-autocomplete",
+      "amap-js-api-district-search",
+      "amap-js-api-driving",
+      "amap-js-api-geocoder",
+      "dom-inputevent",
+      "wx-js-sdk-dt",
+      "wx"
+    ]
+  },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "src/**/*.spec.ts"
+  ]
+}

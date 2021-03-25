@@ -1,0 +1,16 @@
+{
+  "name": "client-app",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "cd ClientApp && npm run start",
+    "build": "cd ClientApp && npm run build",
+    "test": "cd ClientApp && npm run test",
+    "lint": "cd ClientApp && npm run lint",
+    "e2e": "cd ClientApp && npm run e2e",
+    "postinstall": "cd ClientApp && npm install --no-save"
+  },
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {}
+}

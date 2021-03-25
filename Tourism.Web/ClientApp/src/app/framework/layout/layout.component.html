@@ -1,0 +1,22 @@
+<nz-layout [style]="getStyle()">
+  <nz-sider nzCollapsible [(nzCollapsed)]="menu.isCollapsed" [nzTrigger]="null" [nzWidth]="siderWidth" (oTransitionEnd)="_transitionEnd()" (transitionend)="_transitionEnd()" (webkitTransitionEnd)="_transitionEnd()">
+    <ng-content select="[logo]"></ng-content>
+    <applayout-menu [collapsed]="menu.isCollapsed"></applayout-menu>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="header">
+      <div class="trigger"
+           nz-icon
+           [nzType]="menu.isCollapsed ? 'menu-unfold' : 'menu-fold'"
+           (click)="menu.isCollapsed = !menu.isCollapsed"></div>
+      <div class="triggerorther">
+        <ng-content select="[header]"></ng-content>
+      </div>
+    </nz-header>
+    <nz-spin [nzSpinning]="msg.spin">
+      <nz-content>
+        <ng-content></ng-content>
+      </nz-content>
+    </nz-spin>
+  </nz-layout>
+</nz-layout>

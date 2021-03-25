@@ -1,0 +1,15 @@
+<li nz-submenu [nzTitle]="titlecontainer" [nzOpen]="isActive()" (nzOpenChange)="openChange($event)">
+  <ul>
+    <applayout-menuitem *ngFor="let item of children" [menuData]="item">
+    </applayout-menuitem>
+  </ul>
+</li>
+<ng-template #titlecontainer>
+  <ng-container *ngIf="icon!='';else span">
+    <i nz-icon [class]="icon"></i>
+    <span>{{title}}</span>
+  </ng-container>
+  <ng-template #span>
+    <span>{{title}}</span>
+  </ng-template>
+</ng-template>
