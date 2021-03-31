@@ -25,18 +25,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
     <Compile Remove="ClientApp\dist\**" />
     <Compile Remove="ClientApp\node_modules\**" />
     <Compile Remove="wwwroot\UpFile\**" />
+    <Content Remove="bin\**" />
     <Content Remove="ClientApp\dist\**" />
     <Content Remove="ClientApp\node_modules\**" />
     <Content Remove="wwwroot\UpFile\**" />
+    <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="ClientApp\dist\**" />
     <EmbeddedResource Remove="ClientApp\node_modules\**" />
     <EmbeddedResource Remove="wwwroot\UpFile\**" />
+    <None Remove="bin\**" />
     <None Remove="ClientApp\dist\**" />
     <None Remove="ClientApp\node_modules\**" />
     <None Remove="wwwroot\UpFile\**" />
+    <TypeScriptCompile Remove="bin\**" />
     <TypeScriptCompile Remove="ClientApp\dist\**" />
     <TypeScriptCompile Remove="ClientApp\node_modules\**" />
     <TypeScriptCompile Remove="wwwroot\UpFile\**" />
