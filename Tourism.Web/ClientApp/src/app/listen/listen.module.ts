@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ListenComponent } from './listen.component';
-import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule, NzCollapseModule, NzCarouselModule, NzTabsModule } from 'ng-zorro-antd';
-
+import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule, NzCollapseModule, NzCarouselModule, NzTabsModule, NzSwitchModule, NzMenuModule    } from 'ng-zorro-antd';
 import { FormModule } from '../framework/form.module';
 import { WxSmallAppComponent } from './wx-small-app.component';
 
@@ -22,6 +21,8 @@ import { WxSmallAppComponent } from './wx-small-app.component';
         NzCarouselModule,
         NzTabsModule ,
         NzCollapseModule,
+        NzSwitchModule,
+        NzMenuModule ,
         RouterModule.forChild([
             {
                 path: '',

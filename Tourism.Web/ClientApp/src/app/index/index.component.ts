@@ -37,7 +37,6 @@ export class IndexComponent {
     validateForm: FormGroup;
 
     pullData() {
-        this.msg.spin = true;
         //this.api.createClient(AppClient)
         //    .pullData(this.param)
         //    .subscribe(

@@ -1,46 +1,72 @@
 <div nz-row>
     <div nz-col nzSpan="24">
         <a style="
-        overflow: hidden;
-        display: inline;
         float: right;
         margin-top:10px;
         margin-right: 150px;
         height: 40px">登录注册</a>
     </div>
-    <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center">
-
-        <nz-tabset style="color:white;">
-            <nz-tab nzTitle="首页">
-            </nz-tab>
-            <nz-tab nzTitle="手艺资讯">
-            </nz-tab>
-            <nz-tab nzTitle="手艺视界">
-            </nz-tab>
-            <nz-tab nzTitle="手艺好物">
-            </nz-tab>
-            <nz-tab nzTitle="专题策划">
-            </nz-tab>
-            <nz-tab nzTitle="品牌活动">
-            </nz-tab>
-        </nz-tabset>
+    <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center;height:80px;">
+        <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/', 'components', 'menu', 'en']" style="color: white;">首页</a>
+            </li>
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color:white;">手艺咨询</a>
+            </li>
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">手艺视界</a>
+            </li>
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">手艺好物</a>
+            </li>
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">专题策划</a>
+            </li>
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">品牌活动</a>
+            </li>
+        </ul>
 
     </div>
-    <img src="http://www.wodsy.com/upload/2020/10/10/64daf319-d57c-4414-8751-b3a07a39e7cb.png" />
-    <div nz-col nzSpan="24"
-         style="background: url(http://www.wodsy.com/style/images/bg_01.png) repeat-y top left, 
-            url(http://www.wodsy.com/style/images/bg_02.png) repeat-y top right, 
-            url(http://www.wodsy.com/style/images/body_bg.jpg) repeat;
-        height: 1000px;
-        margin-top: -60px;">
-        <nz-carousel nzAutoPlay nzAutoPlaySpeed="2000" style="width: 1100px !important;margin:0 auto;height:200px;">
-            <ng-container *ngFor="let index of list">
-                <div nz-carousel-content>
+    <div nz-col nzspan="24">
+        <div nz-col nzspan="24">
+            <img width="100%" src="http://www.wodsy.com/upload/2020/10/10/64daf319-d57c-4414-8751-b3a07a39e7cb.png" />
+        </div>
 
+        <div nz-col nzSpan="24" style="margin-top:-80px;">
+            <div style="        background-color: white;padding:15px;width: 1200px !important;margin: 0 auto;">
+                <nz-carousel nzAutoPlay nzAutoPlaySpeed="2000" style="margin:0 auto;height:400px;">
+                    <ng-container *ngFor="let index of list">
+                        <div nz-carousel-content>
+                            <img src="http://www.wodsy.com/upload/2020/12/07/3c74f028-fa12-4fdd-8e1b-2102772e8ea0.jpg" />
+                        </div>
+                    </ng-container>
+
+                </nz-carousel>
+                <div nz-row>
+                    <div nz-col nzSpan="24">
+                        <button nz-button nzType="primary" style="margin-top:20px;">手艺咨询</button>
+
+                    </div>
+                    <div nz-col nzSpan="12" style="margin-top:10px;height:110px;" *ngFor="let index of list">
+                        <div style="float:left">
+                            <img style="border-radius:5px"
+                                 width="150px"
+                                 height="100px"
+                                 src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                                 alt="" />
+                        </div>
+                        <div style=" float:left;margin-left:5px;">
+                            <h4>在孩子心里种下非遗的种子</h4>
+                            <p>月16日下午4时许，在海南省五指山市第一小学的非遗培训基地</p>
+
+                        </div>
+                    </div>
                 </div>
-            </ng-container>
 
-        </nz-carousel>
+            </div>
 
+        </div>
     </div>
 </div>
