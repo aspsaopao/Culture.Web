@@ -2,14 +2,20 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ListenComponent } from './listen.component';
-import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule, NzCollapseModule, NzCarouselModule, NzTabsModule, NzSwitchModule, NzMenuModule    } from 'ng-zorro-antd';
+import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule, NzCollapseModule, NzCarouselModule, NzTabsModule, NzSwitchModule, NzMenuModule } from 'ng-zorro-antd';
 import { FormModule } from '../framework/form.module';
 import { WxSmallAppComponent } from './wx-small-app.component';
+import { DetailsComponent } from './details.component';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
     declarations: [
         ListenComponent,
-        WxSmallAppComponent, 
+        WxSmallAppComponent,
+        DetailsComponent,
     ],
     imports: [
         CommonModule,
@@ -19,19 +25,24 @@ import { WxSmallAppComponent } from './wx-small-app.component';
         NzButtonModule,
         NzGridModule,
         NzCarouselModule,
-        NzTabsModule ,
+        NzTabsModule,
         NzCollapseModule,
         NzSwitchModule,
-        NzMenuModule ,
+        NzMenuModule,
+        NzLayoutModule,
+        NzPageHeaderModule,
+        NzBreadCrumbModule,
+        NzIconModule,
         RouterModule.forChild([
             {
                 path: '',
                 component: ListenComponent
             },
             {
-                path: 'wx-small-app',
-                component: WxSmallAppComponent
-            }
+                path: 'details',
+                
+                component: DetailsComponent
+            },
         ])
     ]
 })

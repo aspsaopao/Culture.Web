@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,8 +10,13 @@ import { Component } from '@angular/core';
 /** listen component*/
 export class ListenComponent {
     /** listen ctor */
-    constructor() {
+    constructor(
+        private route: Router    ) {
 
     }
     list: any[] = [1, 2, 3, 4];
+
+    go() {
+        this.route.navigate(['index/details']);
+    }
 }

@@ -9,22 +9,19 @@
     <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center;height:80px;">
         <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/', 'components', 'menu', 'en']" style="color: white;">首页</a>
+                <a [routerLink]="['/index']" style="color: white;">首页</a>
             </li>
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color:white;">手艺咨询</a>
+                <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
             </li>
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">手艺视界</a>
+                <a [routerLink]="['/index']" style="color: white;">手艺好物</a>
             </li>
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">手艺好物</a>
+                <a [routerLink]="['/index']" style="color: white;">专题策划</a>
             </li>
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">专题策划</a>
-            </li>
-            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color: white;">品牌活动</a>
+                <a [routerLink]="['/index']" style="color: white;">了解手艺</a>
             </li>
         </ul>
 
@@ -49,7 +46,7 @@
                         <button nz-button nzType="primary" style="margin-top:20px;">手艺咨询</button>
 
                     </div>
-                    <div nz-col nzSpan="12" style="margin-top:10px;height:110px;" *ngFor="let index of list">
+                    <div nz-col nzSpan="12" style="margin-top:10px;height:110px;" *ngFor="let index of list" >
                         <div style="float:left">
                             <img style="border-radius:5px"
                                  width="150px"
@@ -58,7 +55,7 @@
                                  alt="" />
                         </div>
                         <div style=" float:left;margin-left:5px;">
-                            <h4>在孩子心里种下非遗的种子</h4>
+                            <h4 (click)="go()">在孩子心里种下非遗的种子</h4>
                             <p>月16日下午4时许，在海南省五指山市第一小学的非遗培训基地</p>
 
                         </div>

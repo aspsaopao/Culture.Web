@@ -35,7 +35,7 @@ import { RouterModule } from '@angular/router';
       },
       //{
       //  path: 'question',
-      //  loadChildren: () => import('./question/question.module').then(m => m.QuestionModule)
+      //  loadchildren: () => import('./question/question.module').then(m => m.questionmodule)
       //}
     ])
   ],
