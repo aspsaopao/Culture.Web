@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
@@ -9,21 +10,19 @@ import { Router } from '@angular/router';
 /** details component*/
 export class DetailsComponent {
     /** details ctor */
-    constructor( private route: Router) {
+    constructor(
+        private route: Router    ) {
 
     }
-    
     list: any[] = [1, 2, 3, 4];
     userName = localStorage.getItem('userInfo')?localStorage.getItem('userInfo'):"登录"
     /**查看详情 */
     goDetails() {
         this.route.navigate(['details']);
     }
-    onBack(): void {
-        console.log('onBack');
-    }
     login() {
-        if(this.userName!=="登录"){
+        console.log(this.userName);
+        if(this.userName !=="登录"){
             return;
         }else {
             this.route.navigate(['app/login']);

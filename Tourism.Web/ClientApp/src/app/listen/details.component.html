@@ -1,30 +1,25 @@
 <div nz-row>
-    <div nz-col nzSpan="24">
-        <a style="
-        float: right;
-        margin-top:10px;
-        margin-right: 150px;
-        height: 40px">登录注册</a>
-    </div>
     <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center;height:80px;">
         <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
                 <a [routerLink]="['/index']" style="color: white;">首页</a>
             </li>
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/', 'components', 'menu', 'zh']" style="color:white;">手艺资讯</a>
-            </li>
-            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/index']" style="color: white;">手艺好物</a>
-            </li>
-            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/index']" style="color: white;">专题策划</a>
-            </li>
-            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/index']" style="color: white;">了解手艺</a>
+                <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
             </li>
         </ul>
-
+        <div class="login {{userName !== '登录'?'user':''}}">
+            <a style="
+            color: white;
+            float: right;
+            margin-top:10px;
+            margin-right: 150px;
+            height: 40px" (click)="login()">{{userName}}</a>
+            <div class="user_style">
+                <p style="margin-top: 5px;" (click)="goPersonalCenter()">个人中心</p>
+                <p (click)="output()">退出</p>
+            </div>
+        </div>
     </div>
       
     <div style="padding:15px;width: 1200px !important;margin: 0 auto;">
@@ -33,14 +28,39 @@
                 <i nz-icon nzType="home"></i>
             </nz-breadcrumb-item>
             <nz-breadcrumb-item>
-                <a><i nz-icon nzType="user"></i><span>手艺咨询</span></a>
+                <a><i nz-icon nzType="user"></i><span>首页</span></a>
             </nz-breadcrumb-item>
             <nz-breadcrumb-item>
-                最美的文章
+                手艺咨询
             </nz-breadcrumb-item>
         </nz-breadcrumb>
         <div>
-            
+            <div nz-col nzSpan="24" style="margin-top:30px;">
+                <div style="background-color: white;padding:15px;width: 1200px !important;margin: 0 auto;">
+
+                    <div nz-row>
+                        <div nz-col nzSpan="24" style="margin-top:10px;display: flex;align-items: center;" *ngFor="let index of list" (click)="goDetails()">
+                            <div class="list_border">
+                                <div style="float:left" nz-col nzSpan="4">
+                                    <img style="border-radius:5px"
+                                         width="150px"
+                                         height="100px"
+                                         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                                         alt="" />
+                                </div>
+                                <div style=" float:left;margin-left: 15px;" nz-col nzSpan="20">
+                                    <h4>在孩子心里种下非遗的种子</h4>
+                                    <p>4月16日下午4时许，在海南省五指山市第一小学的非遗培训基地“无限定空间非遗进景区”，对这个新鲜的词语应该如何理解？4月22日，江苏省文化和旅游厅在
+                                        4月16日下午4时许，在海南省五指山市第一小学的非遗培训基地“无限定空间非遗进景区”，对这个新鲜的词语应该如何理解？4月22日，江苏省文化和旅游厅在
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
         </div>
     </div>
 

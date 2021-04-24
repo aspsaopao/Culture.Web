@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IndexComponent } from './index.component';
-import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule } from 'ng-zorro-antd';
+import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule,NzMenuModule } from 'ng-zorro-antd';
 import { FormModule } from '../framework/form.module';
 
 @NgModule({
@@ -14,6 +14,7 @@ import { FormModule } from '../framework/form.module';
     NzInputModule,
     NzButtonModule,
     NzGridModule,
+    NzMenuModule,
     RouterModule.forChild([
       {
         path: '',

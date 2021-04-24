@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ServiceModule } from './framework/service/service.module';
 import { GlobalmsgService } from './framework/service/globalmsg.service';
 import { RouterModule } from '@angular/router';
-
+import { QuillModule } from 'ngx-quill'
 @NgModule({
   declarations: [
     AppComponent
@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
     ServiceModule,
     BrowserModule,
     BrowserAnimationsModule,
+    QuillModule.forRoot(),
     RouterModule.forRoot([
       {
         path: '',
@@ -32,6 +33,14 @@ import { RouterModule } from '@angular/router';
       {
         path: 'index',
         loadChildren: () => import('./listen/listen.module').then(m => m.ListenModule)
+      },
+      {
+        path: 'details',
+        loadChildren: () => import('./details/details.module').then(m => m.DetailsModule)
+      },
+      {
+        path: 'app/personalcenter',
+        loadChildren: () => import('./personalcenter/index.module').then(m => m.PersonalcenterModule)
       },
       //{
       //  path: 'question',
