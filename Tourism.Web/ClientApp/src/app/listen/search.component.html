@@ -6,10 +6,11 @@
             </li>
             <li nz-menu-item nzmatchrouter style=" line-height: 80px;font-size:18px ">
                 <nz-input-group [nzSuffix]="suffixIconSearch">
-                    <input type="text" nz-input  [(ngModel)]="searchName" placeholder="关键字搜索" />
+                    <input type="text" nz-input [(ngModel)]="searchName" placeholder="关键字搜索" />
                 </nz-input-group>
                 <ng-template #suffixIconSearch>
                     <i nz-icon nzType="search" (click)="search()"></i>
+
                 </ng-template>
             </li>
         </ul>
@@ -26,23 +27,11 @@
             </div>
         </div>
     </div>
-    <div nz-col nzspan="24">
-        <div nz-col nzspan="24">
-            <img width="100%" src="http://www.wodsy.com/upload/2020/10/10/64daf319-d57c-4414-8751-b3a07a39e7cb.png" />
-        </div>
-
-        <div nz-col nzSpan="24" style="margin-top:-80px;">
-            <div style="        background-color: white;padding:15px;width: 1200px !important;margin: 0 auto;">
-                <nz-carousel nzAutoPlay nzAutoPlaySpeed="2000" style="margin:0 auto;height:400px;">
-                    <ng-container *ngFor="let index of data">
-                        <div nz-carousel-content>
-                            <img src="http://www.wodsy.com/upload/2020/12/07/3c74f028-fa12-4fdd-8e1b-2102772e8ea0.jpg" (click)="goDetails()" />
-                        </div>
-                    </ng-container>
-
-                </nz-carousel>
+        <div nz-col nzSpan="24" style="margin:0 auto ">
+            <div style=" text-align:center;  background-color: white;padding:15px;width: 1200px !important;margin: 0 auto;">
+                <div *ngIf="!data.length">没有相关内容</div>
                 <div nz-row style="margin-top: 30px;">
-                    <div nz-col nzSpan="12" style="margin-top:10px;height:110px;"
+                    <div nz-col nzSpan="24" style="margin-top:10px;height:110px;"
                          *ngFor="let item of data"
                          (click)="goDetails(item.contentId)">
                         <div style="float:left">
@@ -58,7 +47,7 @@
                                 display: -webkit-box;
                                 -webkit-line-clamp: 2;
                                 -webkit-box-orient: vertical;
-                                width:200px
+                                width:600px
                             "></p>
                         </div>
                     </div>
@@ -67,7 +56,6 @@
             </div>
 
         </div>
-    </div>
     <div nz-col nzSpan="24" class="margin_top" style="text-align:center">
         <div class="foot_bg" style=" background: url(http://www.wodsy.com/style/images/foot_border.png) #FFFFFF top repeat-x;height: 30px;margin-top:40px">
         </div>

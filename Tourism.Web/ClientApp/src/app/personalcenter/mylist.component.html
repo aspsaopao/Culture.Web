@@ -1,0 +1,139 @@
+<div nz-row>
+    <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center;height:80px;">
+        <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/index']" style="color: white;">首页</a>
+            </li>
+            <li nz-menu-item nzmatchrouter style=" line-height: 80px;font-size:18px ">
+                <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input type="text" nz-input [(ngModel)]="searchName" placeholder="关键字搜索" />
+                </nz-input-group>
+                <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search" (click)="search()"></i>
+                </ng-template>
+            </li>
+        </ul>
+        <div class="login {{userName !== '登录'?'user':''}}">
+            <a style="
+        color: white;
+        float: right;
+        margin-top:10px;
+        margin-right: 150px;
+        height: 40px" (click)="login()">{{userName}}</a>
+            <div class="user_style">
+                <p style="margin-top: 5px;" (click)="goPersonalCenter()">个人中心</p>
+                <p (click)="output()">退出</p>
+            </div>
+        </div>
+    </div>
+    <div style="padding:15px;width: 1200px !important;margin: 0 auto;">
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                <i nz-icon nzType="home"></i>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                <a><i nz-icon nzType="user"></i><span>首页</span></a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                个人中心
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                我的发布
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+    <div nz-col nzSpan="24" class="margin_top">
+        <div nz-col [nzSpan]="16" class="textarea">
+            <div nz-col [nzSpan]="24" style="margin: 0 auto;">
+                <div class="card card-default color-palette-box">
+                    <div class="card-header cardheader">
+                        <nz-space>
+                            <nz-space-item>
+                                <form nz-form >
+                                    <nz-space>
+                                        <nz-space-item>
+                                            <nz-select style="width:150px;" [(ngModel)]="param.status" [ngModelOptions]="{standalone: true}">
+                                                <nz-option *ngFor="let item of data.examineList; index as i" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+                                            </nz-select>
+                                        </nz-space-item>
+                                        <nz-space-item>
+                                            <button  (click)="submitForm()" nz-button nzType="dashed" nzShape="circle"><i nz-icon nzType="search"></i></button>
+                                        </nz-space-item>
+                                        <nz-space-item>
+                                            <button  (click)="gopers()"  nz-button nzType="dashed" nzShape="circle"><i nz-icon nzType="plus"></i></button>
+                                        </nz-space-item>
+                                    </nz-space>
+                                </form>
+                            </nz-space-item>
+                        </nz-space>
+                    </div>
+                    <div class="card-body p-0">
+                        <nz-table #table [nzPageSize]="param.pageInfo.pageSize" [nzData]="data.reportList" [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                           
+                                    <th>文章标题</th>
+                                    <th>文章介绍</th>
+                                    <th>发布日期</th>
+                                    <th>审核状态</th>
+                                    <th nzWidth="150px">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of table.data">
+                                
+                                    <td>
+                                        {{item.title}}
+                                    </td>
+                                    <td>
+                                        {{item.introduce}}
+                                    </td>
+                                    <td>
+                                        {{item.createTiem}}
+                                    </td>
+                                    <td>
+                                        <nz-tag nzColor="red" *ngIf="item.ststusName.length>0">
+                                            <div>
+                                                {{item.ststusName}}
+                                            </div>
+                                        </nz-tag>
+                                    </td>
+                                    <td>
+                                        <a nzSize="small" nzType="primary" (click)="goDetails(item.contentId)">详情</a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a nz-popconfirm
+                                           nzPopconfirmTitle="确定要删除吗?"
+                                           nzPopconfirmPlacement="bottom"
+                                           (nzOnConfirm)="confirm(item.contentId)"
+                                           (nzOnCancel)="cancel()">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                    <div class="card-footer clearfix">
+                        <ap-pagination [page]="param.pageInfo" (pageChange)="pageChange($event)"></ap-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div nz-col nzSpan="24" class="margin_top" style="text-align:center">
+        <div class="foot_bg" style=" background: url(http://www.wodsy.com/style/images/foot_border.png) #FFFFFF top repeat-x;height: 30px;margin-top:40px">
+        </div>
+        <div style="text-align:center">
+            <h2>
+                友情链接：文化和旅游部官网中国非物质文化遗产网中国文化传媒网中国文化报
+            </h2>
+            <h3 style="height:80px;margin:0 auto">
+                <img width="80" height="80" src="http://www.wodsy.com/images/portal/weixin.jpg">
+                <span>联系电话：131243242342</span>
+
+            </h3>
+            <h3>公司地址：北京市西城区新文化街56号 | 邮编：100032 | 来电垂询：010-63322600</h3>
+            <h3>Copyright © 2019 - 京ICP备13037645号-1， 北京市公安局海淀分局备案编号11010802016123 , 中传文创投资有限公司版权所有</h3>
+        </div>
+    </div>
+
+</div>

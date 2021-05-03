@@ -15,6 +15,76 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
+@Injectable()
+export class CommClient extends ClientBase {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * 评论内容
+     * @param body (optional) 
+     * @return Success
+     */
+    editComm(body: InputComm | null | undefined): Observable<BooleanInfoModel> {
+        let url_ = this.baseUrl + "/Api/Comm/EditComm";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
+            return this.http.request("post", url_, transformedOptions_);
+        })).pipe(_observableMergeMap((response_: any) => {
+            return this.transformResult(url_, response_, (r) => this.processEditComm(<any>r));
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processEditComm(<any>r));
+                } catch (e) {
+                    return <Observable<BooleanInfoModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<BooleanInfoModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processEditComm(response: HttpResponseBase): Observable<BooleanInfoModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <BooleanInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<BooleanInfoModel>(<any>null);
+    }
+}
 
 /** 评论传入模型 */
 export interface InputComm {
@@ -231,4 +301,24 @@ export enum TypeScriptTemplate {
 export enum HttpClass {
     _0 = 0,
     _1 = 1,
+}
+
+function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
+    return _observableThrow(new ApiException(message, status, response, headers, result));
+}
+
+function blobToText(blob: any): Observable<string> {
+    return new Observable<string>((observer: any) => {
+        if (!blob) {
+            observer.next("");
+            observer.complete();
+        } else {
+            let reader = new FileReader();
+            reader.onload = event => {
+                observer.next((<any>event.target).result);
+                observer.complete();
+            };
+            reader.readAsText(blob);
+        }
+    });
 }

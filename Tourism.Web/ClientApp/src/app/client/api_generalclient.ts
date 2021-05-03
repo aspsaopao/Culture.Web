@@ -134,6 +134,23 @@ export class GeneralClient extends ClientBase {
     }
 }
 
+/** 评论传入模型 */
+export interface InputComm {
+    /** 内容id */
+    contentId?: string | undefined;
+    /** 评论文本信息 */
+    content?: string | undefined;
+}
+
+/** 模型 */
+export interface BooleanInfoModel {
+    data?: boolean | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
 export interface PageInfo {
     count?: number | undefined;
     index?: number | undefined;
@@ -163,6 +180,16 @@ export interface Int32StringTypeForName {
     name?: string | undefined;
 }
 
+/** 评论信息 */
+export interface Comminfo {
+    /** 评论人名字 */
+    name?: string | undefined;
+    /** 评论内容 */
+    content?: string | undefined;
+    /** 评论日期 */
+    dateTime?: string | undefined;
+}
+
 /** 首页返回列表 */
 export interface OutPutContentInfoItem {
     /** id */
@@ -182,6 +209,8 @@ export interface OutPutContentInfoItem {
     ststusName?: string | undefined;
     /** 审核状态列表 */
     examineList?: Int32StringTypeForName[] | undefined;
+    /** 评论信息列表 */
+    commList?: Comminfo[] | undefined;
 }
 
 /** 举报信息 */
@@ -231,15 +260,6 @@ export interface InputAddEditForContent {
     details?: string | undefined;
     /** 介绍 */
     introduce?: string | undefined;
-}
-
-/** 模型 */
-export interface BooleanInfoModel {
-    data?: boolean | undefined;
-    cacheKey?: string | undefined;
-    isSuccess?: boolean | undefined;
-    message?: string | undefined;
-    code?: number | undefined;
 }
 
 /** 菜单结构 */
@@ -310,8 +330,8 @@ export interface ParamForLogin {
     passId: string;
     /** 登录密码 */
     passWord: string;
-    /** 登录密码 */
-    name: string;
+    /** 用户名字 */
+    name?: string | undefined;
     /** 验证码 */
     verCode: string;
 }

@@ -20,24 +20,9 @@
                                     <nz-option *ngFor="let item of data.examineList; index as i" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
                                 </nz-select>
                             </nz-space-item>
-                            <!--<nz-space-item>
-                                <nz-select style="width:150px;" [(ngModel)]="param.rId"
-                                           [ngModelOptions]="{standalone: true}">
-                                    <nz-option [nzValue]="item.id" [nzLabel]="item.name" *ngFor="let item of data.reasonList"></nz-option>
-                                </nz-select>
-                            </nz-space-item>-->
-                            <!--<nz-space-item>
-                                <nz-select style="width:150px;" [(ngModel)]="param.dataTypeId"
-                                           [ngModelOptions]="{standalone: true}">
-                                    <nz-option [nzValue]="item.id" [nzLabel]="item.name" *ngFor="let item of data.dataTypeList"></nz-option>
-                                </nz-select>
-                            </nz-space-item>-->
                             <nz-space-item>
                                 <button nz-button nzType="dashed" nzShape="circle"><i nz-icon nzType="search"></i></button>
                             </nz-space-item>
-                            <!--<nz-space-item style="margin-left:60px;">
-                                <button nz-button nzType="primary" (click)="editForbatchAudit()">批量审核</button>
-                            </nz-space-item>-->
                         </nz-space>
                     </form>
                 </nz-space-item>
@@ -47,10 +32,6 @@
             <nz-table #table [nzPageSize]="param.pageInfo.pageSize" [nzData]="data.reportList" [nzShowPagination]="false">
                 <thead>
                     <tr>
-                        <!--<th (nzCheckedChange)="onAllChecked($event)"
-                            [nzSelections]="listOfSelection"
-                            [(nzChecked)]="checked"
-                            [nzIndeterminate]="indeterminate"></th>-->
                         <th>文章标题</th>
                         <th>文章介绍</th>
                         <th>发布日期</th>

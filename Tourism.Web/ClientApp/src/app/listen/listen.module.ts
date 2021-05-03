@@ -10,12 +10,14 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { SearchComponent } from './search.component';
 
 @NgModule({
     declarations: [
         ListenComponent,
         WxSmallAppComponent,
         DetailsComponent,
+        SearchComponent,
     ],
     imports: [
         CommonModule,
@@ -40,8 +42,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
             },
             {
                 path: 'details',
-                
                 component: DetailsComponent
+            },
+            {
+                path: 'search',
+                component: SearchComponent
             }
         ])
     ]

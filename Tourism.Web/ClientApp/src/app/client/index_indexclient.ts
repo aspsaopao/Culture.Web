@@ -207,6 +207,65 @@ export class IndexClient extends ClientBase {
     }
 
     /**
+     * 模糊搜索
+     * @param name (optional) 
+     * @return Success
+     */
+    getListPageLikeName(name: string | null | undefined): Observable<TableOutputReportInfoInfoModel> {
+        let url_ = this.baseUrl + "/Index/Index/GetListPageLikeName";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (name !== null && name !== undefined)
+            content_.append("name", name.toString());
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
+            return this.http.request("post", url_, transformedOptions_);
+        })).pipe(_observableMergeMap((response_: any) => {
+            return this.transformResult(url_, response_, (r) => this.processGetListPageLikeName(<any>r));
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processGetListPageLikeName(<any>r));
+                } catch (e) {
+                    return <Observable<TableOutputReportInfoInfoModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TableOutputReportInfoInfoModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListPageLikeName(response: HttpResponseBase): Observable<TableOutputReportInfoInfoModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <TableOutputReportInfoInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TableOutputReportInfoInfoModel>(<any>null);
+    }
+
+    /**
      * 获取用户信息
      * @return Success
      */
@@ -260,6 +319,23 @@ export class IndexClient extends ClientBase {
     }
 }
 
+/** 评论传入模型 */
+export interface InputComm {
+    /** 内容id */
+    contentId?: string | undefined;
+    /** 评论文本信息 */
+    content?: string | undefined;
+}
+
+/** 模型 */
+export interface BooleanInfoModel {
+    data?: boolean | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
 export interface PageInfo {
     count?: number | undefined;
     index?: number | undefined;
@@ -289,6 +365,16 @@ export interface Int32StringTypeForName {
     name?: string | undefined;
 }
 
+/** 评论信息 */
+export interface Comminfo {
+    /** 评论人名字 */
+    name?: string | undefined;
+    /** 评论内容 */
+    content?: string | undefined;
+    /** 评论日期 */
+    dateTime?: string | undefined;
+}
+
 /** 首页返回列表 */
 export interface OutPutContentInfoItem {
     /** id */
@@ -308,6 +394,8 @@ export interface OutPutContentInfoItem {
     ststusName?: string | undefined;
     /** 审核状态列表 */
     examineList?: Int32StringTypeForName[] | undefined;
+    /** 评论信息列表 */
+    commList?: Comminfo[] | undefined;
 }
 
 /** 举报信息 */
@@ -357,15 +445,6 @@ export interface InputAddEditForContent {
     details?: string | undefined;
     /** 介绍 */
     introduce?: string | undefined;
-}
-
-/** 模型 */
-export interface BooleanInfoModel {
-    data?: boolean | undefined;
-    cacheKey?: string | undefined;
-    isSuccess?: boolean | undefined;
-    message?: string | undefined;
-    code?: number | undefined;
 }
 
 /** 菜单结构 */
@@ -436,8 +515,8 @@ export interface ParamForLogin {
     passId: string;
     /** 登录密码 */
     passWord: string;
-    /** 登录密码 */
-    name: string;
+    /** 用户名字 */
+    name?: string | undefined;
     /** 验证码 */
     verCode: string;
 }

@@ -4,9 +4,14 @@
             <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
                 <a [routerLink]="['/index']" style="color: white;">首页</a>
             </li>
-            <!--<li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-                <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
-            </li>-->
+            <li nz-menu-item nzmatchrouter style=" line-height: 80px;font-size:18px ">
+                <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input type="text" nz-input [(ngModel)]="searchName" placeholder="关键字搜索" />
+                </nz-input-group>
+                <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search" (click)="search()"></i>
+                </ng-template>
+            </li>
         </ul>
         <div class="login {{userName !== '登录'?'user':''}}">
             <a style="
@@ -27,28 +32,11 @@
                 <nz-breadcrumb-item>
                     <a [routerLink]="['/index']">首页</a>
                 </nz-breadcrumb-item>
-                <!--<nz-breadcrumb-item>
-                    <a [routerLink]="['/app/report']" [queryParams]="{pageIndex:param.nowPage}">手艺资讯</a>
-                </nz-breadcrumb-item>-->
                 <nz-breadcrumb-item>
                     资讯详情
                 </nz-breadcrumb-item>
             </nz-breadcrumb>
         </div>
-        <!--<nz-breadcrumb>
-            <nz-breadcrumb-item>
-                <i nz-icon nzType="home"></i>
-            </nz-breadcrumb-item>
-            <nz-breadcrumb-item>
-                <a><i nz-icon nzType="user"></i><span>首页</span></a>
-            </nz-breadcrumb-item>
-            <nz-breadcrumb-item>
-                手艺资讯
-            </nz-breadcrumb-item>
-            <nz-breadcrumb-item>
-                资讯详情
-            </nz-breadcrumb-item>
-        </nz-breadcrumb>-->
     </div>
     <div nz-col nzSpan="24" class="margin_top" style="text-align:center">
         <div class="content_div">
@@ -69,6 +57,24 @@
                                    height: 450px;" />
                 </div>
                 <div style="text-align:center" class="content_text" [innerHTML]="data.content">
+                </div>
+
+            </div>
+            <div class="content" style=" margin-top:12px">
+                <h2>评论</h2>
+                <!--<nz-textarea-count [nzMaxCharacterCount]="100" >-->
+                <textarea rows="4" nz-input [(ngModel)]="commContent"></textarea>
+                <!--</nz-textarea-count>-->
+                <div style="text-align:right;margin:10px">
+                    <button nz-button nzType="primary" (click)="comm()">提交</button>
+                </div>
+            </div>
+
+            <div class="content" style=" margin-top:12px" *ngIf="data.commList.length >0">
+                <p>评论信息</p>
+                <div  style="margin:15px;" *ngFor="let item of data.commList">
+                    <p style="text-align: left">{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{item.dateTime}}</p>
+                    <p style="text-align: left">{{item.content}}</p>
                 </div>
             </div>
         </div>

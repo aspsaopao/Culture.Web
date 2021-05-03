@@ -46,5 +46,29 @@ namespace Culture.STD.Models.Content
         /// 审核状态列表
         /// </summary>
         public List<TypeForName<int, string>> ExamineList { get; set; }
+        /// <summary>
+        /// 评论信息列表
+        /// </summary>
+        public List<Comminfo> CommList { get; set; }
+    }
+    /// <summary>
+    /// 评论信息
+    /// </summary>
+    public class Comminfo
+    {
+        /// <summary>
+        /// 评论人名字
+        /// </summary>
+        public  string Name { get; set; }
+        /// <summary>
+        /// 评论内容
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
+        /// 评论日期
+        /// </summary>
+        public string DateTime { get; set; }
+
     }
 }

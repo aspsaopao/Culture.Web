@@ -32,7 +32,42 @@ namespace Culture.Command.Components
                 db.GetListPageWithStatus(page, status),
                 t => { return new ContentContext(serviceProvider, t, db); });
         }
-
+        /// <summary>
+        /// 根据状态获取信息列表
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="page"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static async System.Threading.Tasks.Task<List<ContentContext>> GetListPageLikeName(
+         IServiceProvider serviceProvider,
+         PageInfo page,
+         StringEntity name)
+        {
+            Culture.BusyData.Content db = new Culture.BusyData.Content(serviceProvider);
+            return await TransList(
+                db.GetListPageLikeName(page, name),
+                t => { return new ContentContext(serviceProvider, t, db); });
+        }
+        /// <summary>
+        /// 根据状态获取信息列表
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="page"></param>
+        /// <param name="createid"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public static async System.Threading.Tasks.Task<List<ContentContext>> GetListPageCreateID(
+         IServiceProvider serviceProvider,
+         PageInfo page,
+         GuidEntity createid,
+         int status)
+        {
+            Culture.BusyData.Content db = new Culture.BusyData.Content(serviceProvider);
+            return await TransList(
+                db.GetListPageCreateID(page, createid, status),
+                t => { return new ContentContext(serviceProvider, t, db); });
+        }
 
         /// <summary>
         /// 获取下载路径

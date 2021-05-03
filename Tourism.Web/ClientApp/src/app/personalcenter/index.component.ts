@@ -82,7 +82,10 @@ export class PersonalcenterComponent {
             .subscribe(
                 model => {
                     this.msg.spin = false;
-                    this.jumpUrl();
+                    this.route.navigate(['/app/personalcenter'], {
+                        queryParams: {
+                        }
+                    });
                 },
                 fail => {
                     this.msg.showError(fail);
@@ -116,5 +119,14 @@ export class PersonalcenterComponent {
 
     getRemoteUrl(url: string) {
         return this.api.getRemoteUrl(url);
+    }
+    searchName: string = "";
+    search() {
+        console.log(this.searchName);
+        this.route.navigate(['/index/search'], {
+            queryParams: {
+                name: this.searchName
+            }
+        });
     }
 }

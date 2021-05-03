@@ -41,7 +41,45 @@ namespace Culture.BusyData
                 "GetListPage", 
                 DataReader, 
                 page,
-                $"{ReName("Status")} = {status} ");
+                $"{ReName("Status")} = {status} AND {Recycle()} ");
+        }
+
+
+        /// <summary>
+        /// 根据分页参数获取数据列表
+        /// </summary>
+        /// <param name="page">分页信息</param>
+        /// <param name="name">搜索关键字</param>
+        /// <returns></returns>
+        public async System.Threading.Tasks.Task<List<CL_Content>> GetListPageLikeName(
+            PageInfo page,
+            StringEntity name)
+        {
+            return await QueryListPage(
+                $"{ReName($"{Prefix}Content")}",
+                $"GetListPageLikeName:{name}",
+                DataReader,
+                page,
+                $" ({ReName("Title")} like  '%{name}%' OR  {ReName("Content")} like '%{name}%'  OR {ReName("Introduce")}  like '%{name}%' ) AND {Recycle()} AND  {ReName("Status")} = 1 ");
+        }
+        /// <summary>
+        /// 根据分页参数获取数据列表
+        /// </summary>
+        /// <param name="page">分页信息</param>
+        /// <param name="uid">审核状态</param>
+        /// <param name="status">状态</param>
+        /// <returns></returns>
+        public async System.Threading.Tasks.Task<List<CL_Content>> GetListPageCreateID(
+            PageInfo page,
+            GuidEntity uid,
+            int status)
+        {
+            return await QueryListPage(
+                $"{ReName($"{Prefix}Content")}",
+                $"GetListPageCreateID:{uid}:status:{status}",
+                DataReader,
+                page,
+                $"{ReName("CreateUid")} =  '{uid}'  AND {Recycle()}  AND  {ReName("Status")} = {status} ");
         }
 
     }

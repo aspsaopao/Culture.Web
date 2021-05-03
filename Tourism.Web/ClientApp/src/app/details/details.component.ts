@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { CommClient } from '../client/api_commclient';
 import { ContentClient, OutPutContentInfoItem } from '../client/api_contentclient';
 import { GeneralClient } from '../client/api_generalclient';
 import { IndexClient } from '../client/index_indexclient';
@@ -31,7 +32,14 @@ export class DetailsComponent {
             this.pullData();
         });
     }
-
+    ngOnInit() {
+        this.router.events.subscribe((event: NavigationEnd) => {
+            if (event instanceof ActivationEnd) {// 当导航成功结束时执行
+                document.documentElement.scrollTop = 0;
+                //document.body.scrollTop.scrollTop = 0;
+            }
+        });
+    }
     param: QueryParam = this.initParam();
 
     protected initParam(): QueryParam {
@@ -56,6 +64,7 @@ export class DetailsComponent {
                 serverFileName: '',
             },
             title: '',
+            commList: [],
         };
     }
 
@@ -101,5 +110,40 @@ export class DetailsComponent {
                 e => {
                     this.msg.showError(e);
                 });
+    }
+
+    searchName: string = "";
+    search() {
+        console.log(this.searchName);
+        this.router.navigate(['/index/search'], {
+            queryParams: {
+                name: this.searchName
+            }
+        });
+    }
+
+    commContent: string = "";
+    comm() {
+        if (this.commContent.length < 20) {
+            this.msg.create("warning", "评论内容必须超过20个字！！！！");
+            return;
+        }
+        if (this.userName == "登录") {
+            this.msg.create("warning", "请先从左上角登录");
+            return;
+        }
+            this.msg.spin = true;
+            this.api.createClient(CommClient)
+                .editComm({ content: this.commContent, contentId: this.param.fpid })
+                .subscribe(
+                    model => {
+                        this.msg.spin = false;
+                        this.msg.create("success", "评论成功");
+                        this.commContent = "";
+                        this.pullData();
+                    },
+                    fail => {
+                        this.msg.showError(fail);
+                    });
     }
 }

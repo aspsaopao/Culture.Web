@@ -86,6 +86,64 @@ export class ContentClient extends ClientBase {
     }
 
     /**
+     * 我的发布列表
+     * @param body (optional) 
+     * @return Success
+     */
+    getListPageCreateID(body: TableOutputReportInput | null | undefined): Observable<TableOutputReportInfoInfoModel> {
+        let url_ = this.baseUrl + "/Api/Content/GetListPageCreateID";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
+            return this.http.request("post", url_, transformedOptions_);
+        })).pipe(_observableMergeMap((response_: any) => {
+            return this.transformResult(url_, response_, (r) => this.processGetListPageCreateID(<any>r));
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processGetListPageCreateID(<any>r));
+                } catch (e) {
+                    return <Observable<TableOutputReportInfoInfoModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TableOutputReportInfoInfoModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListPageCreateID(response: HttpResponseBase): Observable<TableOutputReportInfoInfoModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <TableOutputReportInfoInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TableOutputReportInfoInfoModel>(<any>null);
+    }
+
+    /**
      * 上传活动宣传图临时文件
      * @param file (optional) 
      * @return Success
@@ -322,6 +380,82 @@ export class ContentClient extends ClientBase {
         }
         return _observableOf<BooleanInfoModel>(<any>null);
     }
+
+    /**
+     * 删除
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteContent(id: string | null | undefined): Observable<BooleanInfoModel> {
+        let url_ = this.baseUrl + "/Api/Content/DeleteContent";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (id !== null && id !== undefined)
+            content_.append("id", id.toString());
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
+            return this.http.request("post", url_, transformedOptions_);
+        })).pipe(_observableMergeMap((response_: any) => {
+            return this.transformResult(url_, response_, (r) => this.processDeleteContent(<any>r));
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processDeleteContent(<any>r));
+                } catch (e) {
+                    return <Observable<BooleanInfoModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<BooleanInfoModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteContent(response: HttpResponseBase): Observable<BooleanInfoModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <BooleanInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<BooleanInfoModel>(<any>null);
+    }
+}
+
+/** 评论传入模型 */
+export interface InputComm {
+    /** 内容id */
+    contentId?: string | undefined;
+    /** 评论文本信息 */
+    content?: string | undefined;
+}
+
+/** 模型 */
+export interface BooleanInfoModel {
+    data?: boolean | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
 }
 
 export interface PageInfo {
@@ -353,6 +487,16 @@ export interface Int32StringTypeForName {
     name?: string | undefined;
 }
 
+/** 评论信息 */
+export interface Comminfo {
+    /** 评论人名字 */
+    name?: string | undefined;
+    /** 评论内容 */
+    content?: string | undefined;
+    /** 评论日期 */
+    dateTime?: string | undefined;
+}
+
 /** 首页返回列表 */
 export interface OutPutContentInfoItem {
     /** id */
@@ -372,6 +516,8 @@ export interface OutPutContentInfoItem {
     ststusName?: string | undefined;
     /** 审核状态列表 */
     examineList?: Int32StringTypeForName[] | undefined;
+    /** 评论信息列表 */
+    commList?: Comminfo[] | undefined;
 }
 
 /** 举报信息 */
@@ -421,15 +567,6 @@ export interface InputAddEditForContent {
     details?: string | undefined;
     /** 介绍 */
     introduce?: string | undefined;
-}
-
-/** 模型 */
-export interface BooleanInfoModel {
-    data?: boolean | undefined;
-    cacheKey?: string | undefined;
-    isSuccess?: boolean | undefined;
-    message?: string | undefined;
-    code?: number | undefined;
 }
 
 /** 菜单结构 */
@@ -500,8 +637,8 @@ export interface ParamForLogin {
     passId: string;
     /** 登录密码 */
     passWord: string;
-    /** 登录密码 */
-    name: string;
+    /** 用户名字 */
+    name?: string | undefined;
     /** 验证码 */
     verCode: string;
 }

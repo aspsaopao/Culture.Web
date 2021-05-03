@@ -66,6 +66,13 @@ namespace Culture.Web.Areas.Index.Controllers
         {
             var T = await ContentContext.GetInfo(HttpContext.RequestServices, Id);
             T.Ver();
+
+            var list = await CommContext.GetListPageWithContentID(
+            HttpContext.RequestServices,
+            new PageInfo(0, 1000),
+            Id
+            );
+
             return new InfoModel<OutPutContentInfoItem>()
             {
                 Data = new OutPutContentInfoItem()
@@ -78,7 +85,15 @@ namespace Culture.Web.Areas.Index.Controllers
                         ServerDirPath = T.GetDownFileDir(),
                         ServerFileName = T.GetEntity().Image,
                     },
-                    Title = T.GetEntity().Title
+                    Title = T.GetEntity().Title,
+                    CommList = (await Task.WhenAll(list.ConvertAll(async K => {
+                        return new Comminfo()
+                        {
+                            Content = K.GetEntity().Content,
+                            DateTime = K.GetEntity().CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                            Name = await K.GetCreateName()
+                        };
+                    }))).ToList()
                 }
             };
         }
@@ -107,6 +122,44 @@ namespace Culture.Web.Areas.Index.Controllers
                 Data = "安装成功!"
             };
         }
+
+        /// <summary>
+        ///模糊搜索
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModel<TableOutputReportInfo>> GetListPageLikeName([FromForm] string name)
+        {
+            var list = await ContentContext.GetListPageLikeName(
+                HttpContext.RequestServices,
+                new PageInfo(0, 10000),
+                name);
+
+            return new InfoModel<TableOutputReportInfo>()
+            {
+                Data = new TableOutputReportInfo()
+                {
+
+                    ReportList = list.ConvertAll(T => {
+                        return new OutPutContentInfoItem()
+                        {
+                            Introduce = T.GetEntity().Introduce,
+                            Content = T.GetEntity().Content.HtmlDecode(),
+                            ContentId = T.GetKey(),
+                            CreateTiem = T.GetEntity().CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                            HeadImage = new TempFileInfo()
+                            {
+                                ServerDirPath = T.GetDownFileDir(),
+                                ServerFileName = T.GetEntity().Image,
+                            },
+                            Title = T.GetEntity().Title,
+                        };
+                    }),
+                },
+            };
+        }
+
 
         /// <summary>
         /// 获取用户信息

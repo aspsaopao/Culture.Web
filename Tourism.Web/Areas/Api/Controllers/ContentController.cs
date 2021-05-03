@@ -22,7 +22,7 @@ using Culture.STD;
 namespace Culture.Web.Areas.Api.Controllers
 {
     /// <summary>
-    /// 活动相关控制器
+    /// 内容相关控制器
     /// </summary>
     [Area("Api")]
     [Route("Api/[controller]/[action]")]
@@ -77,6 +77,55 @@ namespace Culture.Web.Areas.Api.Controllers
         }
 
         /// <summary>
+        ///我的发布列表
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModel<TableOutputReportInfo>> GetListPageCreateID([FromBody] TableOutputReportInput model)
+        {
+
+            var list = await ContentContext.GetListPageCreateID(
+                HttpContext.RequestServices,
+                model.PageInfo,
+                (await UserInfoForLogin).GetKey(),
+                model.Status)  ;
+
+            return new InfoModel<TableOutputReportInfo>()
+            {
+                Data = new TableOutputReportInfo()
+                {
+                    Page = model.PageInfo,
+                    ReportList = list.ConvertAll(T => {
+                        return new OutPutContentInfoItem()
+                        {
+                            Introduce = T.GetEntity().Introduce,
+                            Content = T.GetEntity().Content.HtmlDecode(),
+                            ContentId = T.GetKey(),
+                            CreateTiem = T.GetEntity().CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                            HeadImage = new TempFileInfo()
+                            {
+                                ServerDirPath = T.GetDownFileDir(),
+                                ServerFileName = T.GetEntity().Image,
+                            },
+                            Title = T.GetEntity().Title,
+                            StstusName = HttpContext.RequestServices.GetDataTypeForConstant<ContentStatusType>().FindDataTypeForValue(T.GetEntity().Status)
+                        };
+                    }),
+                    ExamineList = HttpContext.RequestServices.GetDataTypeForConstant<ContentStatusType>().DataType.ConvertAll(T =>
+                    {
+                        return new TypeForName<int, string>()
+                        {
+                            Id = T.Id,
+                            Name = T.Value
+                        };
+                    }),
+                },
+            };
+        }
+
+
+        /// <summary>
         /// 上传活动宣传图临时文件
         /// </summary>
         /// <param name="file"></param>
@@ -111,6 +160,11 @@ namespace Culture.Web.Areas.Api.Controllers
         {
             var T = await ContentContext.GetInfo(HttpContext.RequestServices, Id);
             T.Ver();
+            var list = await CommContext.GetListPageWithContentID(
+                HttpContext.RequestServices,
+                new PageInfo(0, 1000),
+                Id
+                );
             return new InfoModel<OutPutContentInfoItem>()
             {
                 Data = new OutPutContentInfoItem()
@@ -134,6 +188,14 @@ namespace Culture.Web.Areas.Api.Controllers
                             Name = T.Value
                         };
                     }),
+                    CommList  = (await Task.WhenAll( list.ConvertAll(async K=> {
+                        return new Comminfo()
+                        {
+                            Content = K.GetEntity().Content,
+                            DateTime = K.GetEntity().CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                            Name =await K.GetCreateName()
+                        };
+                    }))).ToList()
                 }
             };
         }
@@ -197,6 +259,23 @@ namespace Culture.Web.Areas.Api.Controllers
                 Data = true
             };
         }
-    
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModel<bool>> DeleteContent([FromForm] string id)
+        {
+            var info = await ContentContext.GetInfo(HttpContext.RequestServices, id);
+            info.Ver();
+            await info.MoveToRecycle();
+            return new InfoModel<bool>()
+            {
+                Data = true
+            };
+        }
+
     }
 }

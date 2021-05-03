@@ -9,12 +9,26 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { QuillModule } from 'ngx-quill'; 
-
+import { NzPopconfirmModule, NzSelectModule, NzTableModule, NzTagModule } from 'ng-zorro-antd';
+import { ContentModule } from '../framework/layout/content/content.module';
+import { PaginationModule } from '../framework/pagination/pagination.module';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzIconImportModule } from '../framework/nz-icon-import.module';
+import { MylistComponent } from './mylist.component';
 @NgModule({
     declarations: [
         PersonalcenterComponent,
+        MylistComponent,
     ],
     imports: [
+        NzTagModule,
+        NzIconImportModule,
+        NzSpaceModule,
+        PaginationModule,
+        NzTableModule,
+        NzSelectModule,
+        NzPopconfirmModule,
+        ContentModule,
         NzUploadModule,
         CommonModule,
         FormModule,
@@ -35,6 +49,10 @@ import { QuillModule } from 'ngx-quill';
         RouterModule.forChild([
             {
                 path: '',
+                component: MylistComponent
+            },
+            {
+                path: 'add',
                 component: PersonalcenterComponent
             },
         ])
