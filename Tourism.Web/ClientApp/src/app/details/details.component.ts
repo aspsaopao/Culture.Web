@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ContentClient, OutPutContentInfoItem } from '../client/api_contentclient';
+import { IndexClient } from '../client/index_indexclient';
+import { ApiClientService } from '../framework/service/apiclient.service';
+import { GlobalmsgService } from '../framework/service/globalmsg.service';
 
-
+export interface QueryParam {
+    fpid: string;
+}
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
@@ -11,28 +19,76 @@ import { Router } from '@angular/router';
 export class DetailsComponent {
     /** details ctor */
     constructor(
-        private route: Router    ) {
-
+        private domSanitizer: DomSanitizer,
+        protected api: ApiClientService,
+        protected msg: GlobalmsgService,
+        private fb: FormBuilder,
+        private actRouter: ActivatedRoute,
+        protected router: Router) {
+        actRouter.queryParams.subscribe(T => {
+            this.param = $.extend(this.initParam(), T);
+            this.pullData();
+        });
     }
-    list: any[] = [1, 2, 3, 4];
-    userName = localStorage.getItem('userInfo')?localStorage.getItem('userInfo'):"登录"
-    /**查看详情 */
-    goDetails() {
-        this.route.navigate(['details']);
+
+    param: QueryParam = this.initParam();
+
+    protected initParam(): QueryParam {
+        return {
+            fpid: '',
+        };
+    }
+    getRemoteUrl(url: string) {
+        return this.api.getRemoteUrl(url);
+    }
+    data: OutPutContentInfoItem = this.initData();
+
+    protected initData(): OutPutContentInfoItem {
+        return {
+            content: '',
+            contentId: '',
+            createTiem: '',
+            headImage: {
+                serverDirPath: '',
+                localFileName: '',
+                remoteFilePath: '',
+                serverFileName: '',
+            },
+            title: '',
+        };
+    }
+
+    protected pullData() {
+        this.msg.spin = true;
+        this.api.createClient(IndexClient)
+            .getInfo(this.param.fpid)
+            .subscribe(
+                model => {
+                    this.msg.spin = false;
+                    this.data = $.extend(this.initData(), model.data);
+                },
+                fail => {
+                    this.msg.showError(fail);
+                });
+    }
+
+    userName = localStorage.getItem('userInfo') ? localStorage.getItem('userInfo') : "登录"
+
+    onBack(): void {
+        console.log('onBack');
     }
     login() {
-        console.log(this.userName);
-        if(this.userName !=="登录"){
+        if (this.userName !== "登录") {
             return;
-        }else {
-            this.route.navigate(['app/login']);
+        } else {
+            this.router.navigate(['app/login']);
         }
     }
     goPersonalCenter() {
-        this.route.navigate(['app/personalcenter']);
+        this.router.navigate(['app/personalcenter']);
     }
     output() {
         localStorage.removeItem('userInfo');
-        this.route.navigate(['app/login']);
+        this.router.navigate(['app/login']);
     }
 }

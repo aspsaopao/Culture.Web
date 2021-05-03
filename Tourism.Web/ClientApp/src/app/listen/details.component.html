@@ -42,16 +42,15 @@
                         <div nz-col nzSpan="24" style="margin-top:10px;display: flex;align-items: center;" *ngFor="let index of list" (click)="goDetails()">
                             <div class="list_border">
                                 <div style="float:left" nz-col nzSpan="4">
-                                    <img style="border-radius:5px"
-                                         width="150px"
-                                         height="100px"
-                                         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                                         alt="" />
+                                    <img [src]="getRemoteUrl(item.headImage.remoteFilePath,0)"
+                                         class="img-responsive"
+                                         style=" width: 150px;
+                                   height: 150px;" />
                                 </div>
                                 <div style=" float:left;margin-left: 15px;" nz-col nzSpan="20">
-                                    <h4>在孩子心里种下非遗的种子</h4>
-                                    <p>4月16日下午4时许，在海南省五指山市第一小学的非遗培训基地“无限定空间非遗进景区”，对这个新鲜的词语应该如何理解？4月22日，江苏省文化和旅游厅在
-                                        4月16日下午4时许，在海南省五指山市第一小学的非遗培训基地“无限定空间非遗进景区”，对这个新鲜的词语应该如何理解？4月22日，江苏省文化和旅游厅在
+                                    <h4>{{data.title}}</h4>
+                                    <p>
+                                        {{data.content}}
                                     </p>
                                 </div>
                             </div>

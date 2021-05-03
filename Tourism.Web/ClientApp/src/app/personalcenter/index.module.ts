@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule, NzCollapseModule, NzCarouselModule, NzTabsModule, NzSwitchModule, NzMenuModule } from 'ng-zorro-antd';
+import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule, NzCollapseModule, NzCarouselModule, NzTabsModule, NzSwitchModule, NzMenuModule, NzUploadModule} from 'ng-zorro-antd';
 import { FormModule } from '../framework/form.module';
 import { PersonalcenterComponent } from './index.component';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -15,6 +15,7 @@ import { QuillModule } from 'ngx-quill';
         PersonalcenterComponent,
     ],
     imports: [
+        NzUploadModule,
         CommonModule,
         FormModule,
         NzFormModule,

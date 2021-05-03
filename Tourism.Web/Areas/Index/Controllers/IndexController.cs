@@ -10,6 +10,8 @@ using NetCore.Authentication;
 using NetCore.Command.Components;
 using NetCore.Factory.Ver;
 using Culture.STD.Models;
+using Culture.STD.Models.Content;
+using Culture.Command.Components;
 
 namespace Culture.Web.Areas.Index.Controllers
 {
@@ -21,6 +23,66 @@ namespace Culture.Web.Areas.Index.Controllers
     [ApiController]
     public class IndexController : Controller
     {
+        /// <summary>
+        /// 获取列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModelList<OutPutContentInfoItem>> GetListAsync([FromBody] PageInfo pageInfo)
+        {
+
+            var list = await ContentContext.GetListPageWithStatus(
+                HttpContext.RequestServices,
+                pageInfo,
+                Macro.TASK_COMPLETE);
+
+            return new InfoModelList<OutPutContentInfoItem>()
+            {
+                ListData = list.ConvertAll(T => {
+                    return new OutPutContentInfoItem()
+                    {
+                        Introduce = T.GetEntity().Introduce,
+                        Content = T.GetEntity().Content.HtmlDecode(),
+                        ContentId = T.GetKey(),
+                        CreateTiem = T.GetEntity().CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        HeadImage = new TempFileInfo()
+                        {
+                            ServerDirPath = T.GetDownFileDir(),
+                            ServerFileName = T.GetEntity().Image,
+                        },
+                        Title = T.GetEntity().Title
+                    };
+                }),
+                PageInfo = pageInfo
+            };
+        }
+        /// <summary>
+        /// 获取信息详情
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModel<OutPutContentInfoItem>> GetInfo([FromForm] string Id)
+        {
+            var T = await ContentContext.GetInfo(HttpContext.RequestServices, Id);
+            T.Ver();
+            return new InfoModel<OutPutContentInfoItem>()
+            {
+                Data = new OutPutContentInfoItem()
+                {
+                    Content = T.GetEntity().Content.HtmlDecode(),
+                    ContentId = T.GetKey(),
+                    CreateTiem = T.GetEntity().CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                    HeadImage = new TempFileInfo()
+                    {
+                        ServerDirPath = T.GetDownFileDir(),
+                        ServerFileName = T.GetEntity().Image,
+                    },
+                    Title = T.GetEntity().Title
+                }
+            };
+        }
+
 
         /// <summary>
         /// 安装系统

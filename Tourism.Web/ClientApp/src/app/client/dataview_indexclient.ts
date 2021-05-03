@@ -16,9 +16,36 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 
+export interface TempFileInfo {
+    serverFileName?: string | undefined;
+    localFileName?: string | undefined;
+    serverDirPath?: string | undefined;
+    readonly remoteFilePath?: string | undefined;
+}
+
 /** 模型 */
-export interface StringInfoModel {
-    data?: string | undefined;
+export interface TempFileInfoInfoModel {
+    data?: TempFileInfo | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+/** 添加修改内容 */
+export interface InputAddEditForContent {
+    /** 活动id */
+    aid?: string | undefined;
+    /** 活动主题 */
+    title?: string | undefined;
+    headImage?: TempFileInfo | undefined;
+    /** 活动详情 */
+    details?: string | undefined;
+}
+
+/** 模型 */
+export interface BooleanInfoModel {
+    data?: boolean | undefined;
     cacheKey?: string | undefined;
     isSuccess?: boolean | undefined;
     message?: string | undefined;
@@ -40,6 +67,55 @@ export interface NavBarItem {
 /** 模型 */
 export interface NavBarItemListInfoModel {
     data?: NavBarItem[] | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+/** 模型 */
+export interface StringInfoModel {
+    data?: string | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+export interface PageInfo {
+    count?: number | undefined;
+    index?: number | undefined;
+    pageSize?: number | undefined;
+    readonly pageCount?: number | undefined;
+}
+
+/** 首页返回列表 */
+export interface OutPutContentInfoItem {
+    /** id */
+    contentId?: string | undefined;
+    /** 标题 */
+    title?: string | undefined;
+    /** 内容 */
+    content?: string | undefined;
+    /** 发布日期 */
+    createTiem?: string | undefined;
+    headImage?: TempFileInfo | undefined;
+}
+
+/** 列表模型 */
+export interface OutPutContentInfoItemInfoModelList {
+    isNext?: boolean | undefined;
+    pageInfo?: PageInfo | undefined;
+    listData?: OutPutContentInfoItem[] | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+/** 模型 */
+export interface OutPutContentInfoItemInfoModel {
+    data?: OutPutContentInfoItem | undefined;
     cacheKey?: string | undefined;
     isSuccess?: boolean | undefined;
     message?: string | undefined;

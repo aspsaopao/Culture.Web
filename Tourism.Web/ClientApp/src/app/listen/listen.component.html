@@ -29,7 +29,7 @@
         <div nz-col nzSpan="24" style="margin-top:-80px;">
             <div style="        background-color: white;padding:15px;width: 1200px !important;margin: 0 auto;">
                 <nz-carousel nzAutoPlay nzAutoPlaySpeed="2000" style="margin:0 auto;height:400px;">
-                    <ng-container *ngFor="let index of list">
+                    <ng-container *ngFor="let index of data">
                         <div nz-carousel-content>
                             <img src="http://www.wodsy.com/upload/2020/12/07/3c74f028-fa12-4fdd-8e1b-2102772e8ea0.jpg" (click)="goDetails()"/>
                         </div>
@@ -37,18 +37,28 @@
 
                 </nz-carousel>
                 <div nz-row style="margin-top: 30px;">
-                    <div nz-col nzSpan="12" style="margin-top:10px;height:110px;" *ngFor="let index of list" (click)="goDetails()">
+                    <div nz-col nzSpan="12" style="margin-top:10px;height:110px;" 
+                         *ngFor="let item of data" 
+                         (click)="goDetails(item.contentId)">
                         <div style="float:left">
-                            <img style="border-radius:5px"
+                            <!--<img style="border-radius:5px"
                                  width="150px"
                                  height="100px"
                                  src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                                 alt="" />
+                                 alt="" />-->
+                            <img [src]="getRemoteUrl(item.headImage.remoteFilePath,0)" 
+                                 class="img-responsive" 
+                                 style=" width: 150px;
+                                   height: 150px;" />
                         </div>
                         <div style=" float:left;margin-left:5px;">
-                            <h4>在孩子心里种下非遗的种子</h4>
-                            <p>4月16日下午4时许，在海南省五指山市第一小学的非遗培训基地</p>
-
+                            <h4>{{item.title}}</h4>
+                            <!--<p>{{item.content}}</p>-->
+                              <p  [innerHTML]="item.content" style="overflow: hidden;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                            "></p>
                         </div>
                     </div>
                 </div>

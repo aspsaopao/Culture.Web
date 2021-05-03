@@ -19,7 +19,7 @@ namespace Culture.BusyData
         /// 构造
         /// </summary>
         public Common(IServiceProvider serviceProvider) :
-            base(serviceProvider, "SA_", "SV_SA_")
+            base(serviceProvider, "CL_", "SV_CL_")
         {
             common = new NetCore.BusyData.Common(serviceProvider);
         }

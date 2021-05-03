@@ -24,8 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Command\Components\" />
-    <Folder Include="Entity\" />
     <Folder Include="Tool\" />
   </ItemGroup>
 

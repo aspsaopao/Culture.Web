@@ -9,6 +9,7 @@ using NetCore.Command.Login;
 using NetCore.Factory.Ver;
 using Culture.STD.Models;
 using Culture.STD.Models.Users;
+using NetCore.Command;
 
 namespace Culture.Web.Areas.Index.Controllers
 {
@@ -73,6 +74,60 @@ namespace Culture.Web.Areas.Index.Controllers
                     Name = userInfo.GetEntity().RealName.HtmlDecode(),
                     Remark = "",
                     UId = userInfo.GetKey()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 注册账号
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModel<LoginModel>> Register([FromBody] ParamForLogin model)
+        {
+            var info =await UserAuthsContext.GetInfo(HttpContext.RequestServices, model.PassId);
+            if (!info.IsEmpty())
+                throw new Exception("账号已经存在，请换一个试试");
+
+            info = await UserAuthsContext.Sub(HttpContext.RequestServices,
+                model.PassId,
+                "",
+                0,
+                model.PassWord.Md5(),
+                DateTime.Now,
+                "",
+                DateTime.Now,
+                "");
+
+            var userinfo= await UsersContext.SubWithBase(
+                HttpContext.RequestServices,
+                "",
+                "",
+                1,
+                "",
+                DateTime.Now,
+                0,
+                0,
+                0,
+                "",
+                "",
+                "",
+                1,
+                DateTime.Now,
+                DateTime.Now,
+                "",
+                "");
+           await info.UpdateWithUid(userinfo.GetKey());
+
+            return new InfoModel<LoginModel>()
+            {
+                Data = new LoginModel
+                {
+                    IsLogin = 1,
+                    Name = userinfo.GetEntity().RealName.HtmlDecode(),
+                    Remark = "",
+                    UId = userinfo.GetKey()
                 }
             };
         }

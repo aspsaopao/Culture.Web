@@ -51,33 +51,33 @@ export class IndexComponent implements OnInit {
   }
 
   submitForm() {
-    for (const i in this.vailForm.controls) {
-      this.vailForm.controls[i].markAsDirty();
-      this.vailForm.controls[i].updateValueAndValidity();
-    }
-    if (!this.vailForm.valid)
-      return;
-    this.msg.loading = true;
-    const time = setTimeout(()=>{
-        this.msg.loading = false;
-        clearTimeout(time);
-        this.route.navigate(['index']);
-        if(localStorage.getItem('userInfo')){
-            localStorage.removeItem('userInfo');
-        }
-        localStorage.setItem('userInfo', "新手用户");
-    },1000);
-    // this.api.createClient(LoginClient)
-    //   .login(this.param)
-    //   .subscribe(
-    //     model => {
-    //       this.msg.loading = false;
-    //       this.route.navigate(['app/index']);
-    //     },
-    //     err => {
-    //       this.flushImage();
-    //       this.msg.showError(err);
-    //     });
+    //for (const i in this.vailForm.controls) {
+    //  this.vailForm.controls[i].markAsDirty();
+    //  this.vailForm.controls[i].updateValueAndValidity();
+    //}
+    //if (!this.vailForm.valid)
+    //  return;
+    //this.msg.loading = true;
+    //const time = setTimeout(()=>{
+    //    this.msg.loading = false;
+    //    clearTimeout(time);
+    //    this.route.navigate(['index']);
+    //    if(localStorage.getItem('userInfo')){
+    //        localStorage.removeItem('userInfo');
+    //    }
+    //    localStorage.setItem('userInfo', "新手用户");
+    //},1000);
+     this.api.createClient(LoginClient)
+       .login(this.param)
+       .subscribe(
+         model => {
+           this.msg.loading = false;
+           this.route.navigate(['index']);
+         },
+         err => {
+           this.flushImage();
+           this.msg.showError(err);
+         });
   }
 }
 

@@ -28,6 +28,123 @@ export class IndexClient extends ClientBase {
     }
 
     /**
+     * 获取列表
+     * @param body (optional) 
+     * @return Success
+     */
+    getList(body: PageInfo | null | undefined): Observable<OutPutContentInfoItemInfoModelList> {
+        let url_ = this.baseUrl + "/Index/Index/GetList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
+            return this.http.request("post", url_, transformedOptions_);
+        })).pipe(_observableMergeMap((response_: any) => {
+            return this.transformResult(url_, response_, (r) => this.processGetList(<any>r));
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processGetList(<any>r));
+                } catch (e) {
+                    return <Observable<OutPutContentInfoItemInfoModelList>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<OutPutContentInfoItemInfoModelList>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetList(response: HttpResponseBase): Observable<OutPutContentInfoItemInfoModelList> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <OutPutContentInfoItemInfoModelList>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<OutPutContentInfoItemInfoModelList>(<any>null);
+    }
+
+    /**
+     * 获取信息详情
+     * @param id (optional) 
+     * @return Success
+     */
+    getInfo(id: string | null | undefined): Observable<OutPutContentInfoItemInfoModel> {
+        let url_ = this.baseUrl + "/Index/Index/GetInfo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (id !== null && id !== undefined)
+            content_.append("Id", id.toString());
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
+            return this.http.request("post", url_, transformedOptions_);
+        })).pipe(_observableMergeMap((response_: any) => {
+            return this.transformResult(url_, response_, (r) => this.processGetInfo(<any>r));
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processGetInfo(<any>r));
+                } catch (e) {
+                    return <Observable<OutPutContentInfoItemInfoModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<OutPutContentInfoItemInfoModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetInfo(response: HttpResponseBase): Observable<OutPutContentInfoItemInfoModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <OutPutContentInfoItemInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<OutPutContentInfoItemInfoModel>(<any>null);
+    }
+
+    /**
      * 安装系统
      * @param passId (optional) 
      * @param passWord (optional) 
@@ -143,9 +260,36 @@ export class IndexClient extends ClientBase {
     }
 }
 
+export interface TempFileInfo {
+    serverFileName?: string | undefined;
+    localFileName?: string | undefined;
+    serverDirPath?: string | undefined;
+    readonly remoteFilePath?: string | undefined;
+}
+
 /** 模型 */
-export interface StringInfoModel {
-    data?: string | undefined;
+export interface TempFileInfoInfoModel {
+    data?: TempFileInfo | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+/** 添加修改内容 */
+export interface InputAddEditForContent {
+    /** 活动id */
+    aid?: string | undefined;
+    /** 活动主题 */
+    title?: string | undefined;
+    headImage?: TempFileInfo | undefined;
+    /** 活动详情 */
+    details?: string | undefined;
+}
+
+/** 模型 */
+export interface BooleanInfoModel {
+    data?: boolean | undefined;
     cacheKey?: string | undefined;
     isSuccess?: boolean | undefined;
     message?: string | undefined;
@@ -167,6 +311,55 @@ export interface NavBarItem {
 /** 模型 */
 export interface NavBarItemListInfoModel {
     data?: NavBarItem[] | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+/** 模型 */
+export interface StringInfoModel {
+    data?: string | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+export interface PageInfo {
+    count?: number | undefined;
+    index?: number | undefined;
+    pageSize?: number | undefined;
+    readonly pageCount?: number | undefined;
+}
+
+/** 首页返回列表 */
+export interface OutPutContentInfoItem {
+    /** id */
+    contentId?: string | undefined;
+    /** 标题 */
+    title?: string | undefined;
+    /** 内容 */
+    content?: string | undefined;
+    /** 发布日期 */
+    createTiem?: string | undefined;
+    headImage?: TempFileInfo | undefined;
+}
+
+/** 列表模型 */
+export interface OutPutContentInfoItemInfoModelList {
+    isNext?: boolean | undefined;
+    pageInfo?: PageInfo | undefined;
+    listData?: OutPutContentInfoItem[] | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+/** 模型 */
+export interface OutPutContentInfoItemInfoModel {
+    data?: OutPutContentInfoItem | undefined;
     cacheKey?: string | undefined;
     isSuccess?: boolean | undefined;
     message?: string | undefined;

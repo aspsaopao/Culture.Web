@@ -16,7 +16,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
-export class GeneralClient extends ClientBase {
+export class ContentClient extends ClientBase {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -28,14 +28,20 @@ export class GeneralClient extends ClientBase {
     }
 
     /**
-     * 获取菜单
+     * 上传活动宣传图临时文件
+     * @param file (optional) 
      * @return Success
      */
-    menu(): Observable<NavBarItemListInfoModel> {
-        let url_ = this.baseUrl + "/Api/General/Menu";
+    uploadForActivityTempFile(file: FileParameter | null | undefined): Observable<TempFileInfoInfoModel> {
+        let url_ = this.baseUrl + "/Api/Content/UploadForActivityTempFile";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = new FormData();
+        if (file !== null && file !== undefined)
+            content_.append("file", file.data, file.fileName ? file.fileName : "file");
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
@@ -46,20 +52,20 @@ export class GeneralClient extends ClientBase {
         return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
             return this.http.request("post", url_, transformedOptions_);
         })).pipe(_observableMergeMap((response_: any) => {
-            return this.transformResult(url_, response_, (r) => this.processMenu(<any>r));
+            return this.transformResult(url_, response_, (r) => this.processUploadForActivityTempFile(<any>r));
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.transformResult(url_, response_, (r) => this.processMenu(<any>r));
+                    return this.transformResult(url_, response_, (r) => this.processUploadForActivityTempFile(<any>r));
                 } catch (e) {
-                    return <Observable<NavBarItemListInfoModel>><any>_observableThrow(e);
+                    return <Observable<TempFileInfoInfoModel>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<NavBarItemListInfoModel>><any>_observableThrow(response_);
+                return <Observable<TempFileInfoInfoModel>><any>_observableThrow(response_);
         }));
     }
 
-    protected processMenu(response: HttpResponseBase): Observable<NavBarItemListInfoModel> {
+    protected processUploadForActivityTempFile(response: HttpResponseBase): Observable<TempFileInfoInfoModel> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -69,7 +75,7 @@ export class GeneralClient extends ClientBase {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : <NavBarItemListInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = _responseText === "" ? null : <TempFileInfoInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -77,18 +83,85 @@ export class GeneralClient extends ClientBase {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<NavBarItemListInfoModel>(<any>null);
+        return _observableOf<TempFileInfoInfoModel>(<any>null);
     }
 
     /**
-     * 登出
+     * 上传内容
+     * @param body (optional) 
      * @return Success
      */
-    loginOut(): Observable<StringInfoModel> {
-        let url_ = this.baseUrl + "/Api/General/LoginOut";
+    editActivity(body: InputAddEditForContent | null | undefined): Observable<BooleanInfoModel> {
+        let url_ = this.baseUrl + "/Api/Content/EditActivity";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
         let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
+            return this.http.request("post", url_, transformedOptions_);
+        })).pipe(_observableMergeMap((response_: any) => {
+            return this.transformResult(url_, response_, (r) => this.processEditActivity(<any>r));
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.transformResult(url_, response_, (r) => this.processEditActivity(<any>r));
+                } catch (e) {
+                    return <Observable<BooleanInfoModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<BooleanInfoModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processEditActivity(response: HttpResponseBase): Observable<BooleanInfoModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <BooleanInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<BooleanInfoModel>(<any>null);
+    }
+
+    /**
+     * 审核
+     * @param id (optional) 
+     * @param status (optional) 
+     * @return Success
+     */
+    exaContent(id: string | null | undefined, status: number | null | undefined): Observable<BooleanInfoModel> {
+        let url_ = this.baseUrl + "/Api/Content/ExaContent";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (id !== null && id !== undefined)
+            content_.append("id", id.toString());
+        if (status !== null && status !== undefined)
+            content_.append("status", status.toString());
+
+        let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
@@ -99,20 +172,20 @@ export class GeneralClient extends ClientBase {
         return _observableFrom(this.transformOptions(options_)).pipe(_observableMergeMap(transformedOptions_ => {
             return this.http.request("post", url_, transformedOptions_);
         })).pipe(_observableMergeMap((response_: any) => {
-            return this.transformResult(url_, response_, (r) => this.processLoginOut(<any>r));
+            return this.transformResult(url_, response_, (r) => this.processExaContent(<any>r));
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.transformResult(url_, response_, (r) => this.processLoginOut(<any>r));
+                    return this.transformResult(url_, response_, (r) => this.processExaContent(<any>r));
                 } catch (e) {
-                    return <Observable<StringInfoModel>><any>_observableThrow(e);
+                    return <Observable<BooleanInfoModel>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<StringInfoModel>><any>_observableThrow(response_);
+                return <Observable<BooleanInfoModel>><any>_observableThrow(response_);
         }));
     }
 
-    protected processLoginOut(response: HttpResponseBase): Observable<StringInfoModel> {
+    protected processExaContent(response: HttpResponseBase): Observable<BooleanInfoModel> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -122,7 +195,7 @@ export class GeneralClient extends ClientBase {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : <StringInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = _responseText === "" ? null : <BooleanInfoModel>JSON.parse(_responseText, this.jsonParseReviver);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -130,7 +203,7 @@ export class GeneralClient extends ClientBase {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<StringInfoModel>(<any>null);
+        return _observableOf<BooleanInfoModel>(<any>null);
     }
 }
 
@@ -284,6 +357,11 @@ export enum TypeScriptTemplate {
 export enum HttpClass {
     _0 = 0,
     _1 = 1,
+}
+
+export interface FileParameter {
+    data: any;
+    fileName: string;
 }
 
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
