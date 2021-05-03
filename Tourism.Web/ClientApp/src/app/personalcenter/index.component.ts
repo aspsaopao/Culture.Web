@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentClient } from '../client/api_contentclient';
+import { GeneralClient } from '../client/api_generalclient';
 import { InputAddEditForContent, TempFileInfoInfoModel } from '../client/index_loginclient';
 import { ApiClientService } from '../framework/service/apiclient.service';
 import { GlobalmsgService } from '../framework/service/globalmsg.service';
@@ -51,8 +52,18 @@ export class PersonalcenterComponent {
         this.route.navigate(['app/personalcenter']);
     }
     output() {
-        localStorage.removeItem('userInfo');
-        this.route.navigate(['app/login']);
+        this.msg.loading = true;
+        this.api.createClient(GeneralClient)
+            .loginOut()
+            .subscribe(
+                model => {
+                    localStorage.removeItem('userInfo');
+                    this.msg.loading = false;
+                    this.route.navigate(['index']);
+                },
+                e => {
+                    this.msg.showError(e);
+                });
     }
     /**资讯正文*/
     contentChanged(e) {

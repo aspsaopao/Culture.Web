@@ -34,5 +34,17 @@ namespace Culture.STD.Models.Content
         /// 介绍
         /// </summary>
         public string Introduce { get; set; }
+        /// <summary>
+        /// 审核状态
+        /// </summary>
+        public int Status { get; set; }
+        /// <summary>
+        /// 状态名称
+        /// </summary>
+        public  string StstusName { get; set; }
+        /// <summary>
+        /// 审核状态列表
+        /// </summary>
+        public List<TypeForName<int, string>> ExamineList { get; set; }
     }
 }

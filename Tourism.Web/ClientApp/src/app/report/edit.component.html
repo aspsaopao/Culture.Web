@@ -1,0 +1,66 @@
+<applayoutcontent-content>
+    <div nav>
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                <a [routerLink]="['/app/index']">首页</a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                <a [routerLink]="['/app/report']" [queryParams]="{pageIndex:param.nowPage}">举报审核</a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                审核举报
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+    <div class="card card-default color-palette-box">
+        <div class="card-body">
+            <form nz-form (ngSubmit)="submitForm()">
+
+
+                <nz-form-item>
+
+                    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired>标题</nz-form-label>
+                    <nz-form-control [nzSm]="8" [nzXs]="24">
+                        <nz-tag nzColor="red" *ngIf="data.title.length>0">
+                            <div>
+                                {{data.title}}
+                            </div>
+                        </nz-tag>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired>文章首图</nz-form-label>
+                    <nz-form-control [nzSm]="8" [nzXs]="24">
+                        <img [src]="getRemoteUrl(data.headImage.remoteFilePath)" 
+                             class="img-responsive" style="width: 100px;margin-left: 10px;border: 1px solid #968d8d" />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired>用户留言文本</nz-form-label>
+                    <nz-form-control [nzSm]="8" [nzXs]="24">
+                        <div style="text-align:center" class="content_text" [innerHTML]="data.content"></div>
+                    </nz-form-control>
+                </nz-form-item>
+
+
+                <nz-form-item>
+                    <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired>审核状态</nz-form-label>
+                    <nz-form-control [nzSm]="8" [nzXs]="24">
+
+                        <nz-select style="width:150px;" [(ngModel)]="data.status" [ngModelOptions]="{standalone: true}">
+                            <nz-option *ngFor="let item of data.examineList; index as i" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+
+                <nz-form-item>
+                    <nz-form-label [nzSm]="4" [nzXs]="24" nzNoColon></nz-form-label>
+                    <nz-form-control [nzSm]="8" [nzXs]="24">
+                        <button nz-button>确定</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </div>
+    </div>
+</applayoutcontent-content>

@@ -1,198 +1,219 @@
 <div nz-row>
     <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center;height:80px;">
-      <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
-          <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-              <a [routerLink]="['/index']" style="color: white;">首页</a>
-          </li>
-          <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-              <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
-          </li>
-      </ul>
-      <div class="login {{userName !== '登录'?'user':''}}">
-        <a style="
+        <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/index']" style="color: white;">首页</a>
+            </li>
+            <!--<li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
+            </li>-->
+        </ul>
+        <div class="login {{userName !== '登录'?'user':''}}">
+            <a style="
         color: white;
         float: right;
         margin-top:10px;
         margin-right: 150px;
         height: 40px" (click)="login()">{{userName}}</a>
-        <div class="user_style">
-            <p style="margin-top: 5px;" (click)="goPersonalCenter()">个人中心</p>
-            <p (click)="output()">退出</p>
+            <div class="user_style">
+                <p style="margin-top: 5px;" (click)="goPersonalCenter()">个人中心</p>
+                <p (click)="output()">退出</p>
+            </div>
         </div>
     </div>
-  </div>
-  <div style="padding:15px;width: 1200px !important;margin: 0 auto;">
-    <nz-breadcrumb>
-        <nz-breadcrumb-item>
-            <i nz-icon nzType="home"></i>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-            <a><i nz-icon nzType="user"></i><span>首页</span></a>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-            个人中心
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-            发布资讯
-        </nz-breadcrumb-item>
-    </nz-breadcrumb>
-  </div>
-  <div nz-col nzSpan="24" class="margin_top">
-    <div nz-col [nzSpan]="16" class="textarea">
-        <div nz-col [nzSpan]="24" style="margin: 0 auto;">
-            <div>
-                <p>请输入资讯标题：</p>
-                <input nz-input placeholder="请输入资讯标题" [(ngModel)]="inputmodel.title" />
-            </div>
-            <div>
-                <p>请选择封面图：</p>
-                <div style="display:inline-block;">
-                    <nz-upload nzListType="picture-card"
-                               [nzCustomRequest]="modulesForDataIduploadFile.customRequest"
-                               [nzBeforeUpload]="modulesForDataIduploadFile.beforeUpload"
-                               [nzShowUploadList]="false"
-                               [(nzFileList)]="modulesForDataIduploadFile.fileList">
-                        <ng-container *ngIf="inputmodel.headImage.remoteFilePath==''">
-                            <i nz-icon nzType="plus"></i>
-                            <div class="ant-upload-text">上传宣传图</div>
-                        </ng-container>
-                        <ng-container *ngIf="inputmodel.headImage.remoteFilePath!=''">
-                            <img [src]="getRemoteUrl(inputmodel.headImage.remoteFilePath)"
-                                 class="img-responsive" style="width:186px;height:86px;" />
-                        </ng-container>
-                    </nz-upload>
+    <div style="padding:15px;width: 1200px !important;margin: 0 auto;">
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                <i nz-icon nzType="home"></i>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                <a><i nz-icon nzType="user"></i><span>首页</span></a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                个人中心
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                发布资讯
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+    <div nz-col nzSpan="24" class="margin_top">
+        <div nz-col [nzSpan]="16" class="textarea">
+            <div nz-col [nzSpan]="24" style="margin: 0 auto;">
+                <div>
+                    <p>请输入资讯标题：</p>
+                    <input nz-input placeholder="请输入资讯标题" [(ngModel)]="inputmodel.title" />
                 </div>
-            </div>
-         
+                <div>
+                    <p>请选择封面图：</p>
+                    <div style="display:inline-block;">
+                        <nz-upload nzListType="picture-card"
+                                   [nzCustomRequest]="modulesForDataIduploadFile.customRequest"
+                                   [nzBeforeUpload]="modulesForDataIduploadFile.beforeUpload"
+                                   [nzShowUploadList]="false"
+                                   [(nzFileList)]="modulesForDataIduploadFile.fileList">
+                            <ng-container *ngIf="inputmodel.headImage.remoteFilePath==''">
+                                <i nz-icon nzType="plus"></i>
+                                <div class="ant-upload-text">上传宣传图</div>
+                            </ng-container>
+                            <ng-container *ngIf="inputmodel.headImage.remoteFilePath!=''">
+                                <img [src]="getRemoteUrl(inputmodel.headImage.remoteFilePath)"
+                                     class="img-responsive" style="width:186px;height:86px;" />
+                            </ng-container>
+                        </nz-upload>
+                    </div>
+                </div>
+                <div>
+                    <p>请输入资讯介绍：</p>
+                    <input nz-input placeholder="请输入资讯介绍" [(ngModel)]="inputmodel.introduce" />
+                </div>
 
-            <p style="margin-top: 30px;margin-bottom: 10px;">请输入资讯正文：</p>
-            <quill-editor class="quill_editor" (onEditorCreated)="EditorCreated($event)" [(ngModel)]="inputmodel.details"
-                          placeholder="请输入资讯内容" (onContentChanged)="contentChanged($event)">
-                <div quill-editor-toolbar>
-                    <span class="ql-formats">
-                        <!-- 加粗 -->
-                        <button class="ql-bold" [title]="'Bold'"></button>
-                    </span>
-                    <select class="ql-align" [title]="'Aligment'">
-                        <option selected></option>
-                        <option value="center"></option>
-                        <option value="right"></option>
-                        <option value="justify"></option>
-                    </select>
-                    <!-- 加入图片 -->
-                    <button class="ql-image" [title]="'Aligment3'"></button>
-                    <!-- 更改颜色 -->
-                    <select class="ql-color">
-                        <option selected="selected"></option>
-                        <option value="#e60000"></option>
-                        <option value="#ff9900"></option>
-                        <option value="#ffff00"></option>
-                        <option value="#008a00"></option>
-                        <option value="#0066cc"></option>
-                        <option value="#9933ff"></option>
-                        <option value="#ffffff"></option>
-                        <option value="#facccc"></option>
-                        <option value="#ffebcc"></option>
-                        <option value="#ffffcc"></option>
-                        <option value="#cce8cc"></option>
-                        <option value="#cce0f5"></option>
-                        <option value="#ebd6ff"></option>
-                        <option value="#bbbbbb"></option>
-                        <option value="#f06666"></option>
-                        <option value="#ffc266"></option>
-                        <option value="#ffff66"></option>
-                        <option value="#66b966"></option>
-                        <option value="#66a3e0"></option>
-                        <option value="#c285ff"></option>
-                        <option value="#888888"></option>
-                        <option value="#a10000"></option>
-                        <option value="#b26b00"></option>
-                        <option value="#b2b200"></option>
-                        <option value="#006100"></option>
-                        <option value="#0047b2"></option>
-                        <option value="#6b24b2"></option>
-                        <option value="#444444"></option>
-                        <option value="#5c0000"></option>
-                        <option value="#663d00"></option>
-                        <option value="#666600"></option>
-                        <option value="#003700"></option>
-                        <option value="#002966"></option>
-                        <option value="#3d1466"></option>
-                    </select>
-                    <!-- 字体大小 -->
-                    <select class="ql-size">
-                        <option value="small"></option>
-                        <option selected></option>
-                        <option value="large"></option>
-                        <option value="huge"></option>
-                    </select>
-                    <!--上标、下标按钮-->
-                    <button class="ql-script" value="sub"></button>
-                    <button class="ql-script" value="super"></button>
-                    <button type="button" class="ql-italic"></button>
-                    <!-- 下划线 -->
-                    <button type="button" class="ql-underline"></button>
-                    <!-- 删除线 -->
-                    <button type="button" class="ql-strike"></button>
-                    <!-- 列表显示 -->
-                    <button type="button" class="ql-list" value="ordered"></button>
-                    <!-- 缩进 -->
-                    <button type="button" class="ql-indent" value="-1"></button>
-                    <button type="button" class="ql-indent" value="+1"></button>
-                    <!-- 背景颜色 -->
-                    <select class="ql-background">
-                        <option value="#000000"></option>
-                        <option value="#e60000"></option>
-                        <option value="#ff9900"></option>
-                        <option value="#ffff00"></option>
-                        <option value="#008a00"></option>
-                        <option value="#0066cc"></option>
-                        <option value="#9933ff"></option>
-                        <option selected="selected"></option>
-                        <option value="#facccc"></option>
-                        <option value="#ffebcc"></option>
-                        <option value="#ffffcc"></option>
-                        <option value="#cce8cc"></option>
-                        <option value="#cce0f5"></option>
-                        <option value="#ebd6ff"></option>
-                        <option value="#bbbbbb"></option>
-                        <option value="#f06666"></option>
-                        <option value="#ffc266"></option>
-                        <option value="#ffff66"></option>
-                        <option value="#66b966"></option>
-                        <option value="#66a3e0"></option>
-                        <option value="#c285ff"></option>
-                        <option value="#888888"></option>
-                        <option value="#a10000"></option>
-                        <option value="#b26b00"></option>
-                        <option value="#b2b200"></option>
-                        <option value="#006100"></option>
-                        <option value="#0047b2"></option>
-                        <option value="#6b24b2"></option>
-                        <option value="#444444"></option>
-                        <option value="#5c0000"></option>
-                        <option value="#663d00"></option>
-                        <option value="#666600"></option>
-                        <option value="#003700"></option>
-                        <option value="#002966"></option>
-                        <option value="#3d1466"></option>
-                    </select>
-                    <!-- 字体 -->
-                    <select class="ql-font">
-                        <option selected="selected">标准字体</option>
-                        <option value="serif">衬线字体</option>
-                        <option value="monospace">等宽字体</option>
-                    </select>
-                    <!-- 清除按钮 -->
-                    <button type="button" class="ql-clean"></button>
-                    <!-- 链接 -->
-                    <button type="button" class="ql-link"></button>
+                <p style="margin-top: 30px;margin-bottom: 10px;">请输入资讯正文：</p>
+                <quill-editor class="quill_editor" (onEditorCreated)="EditorCreated($event)" [(ngModel)]="inputmodel.details"
+                              placeholder="请输入资讯内容" (onContentChanged)="contentChanged($event)">
+                    <div quill-editor-toolbar>
+                        <span class="ql-formats">
+                            <!-- 加粗 -->
+                            <button class="ql-bold" [title]="'Bold'"></button>
+                        </span>
+                        <select class="ql-align" [title]="'Aligment'">
+                            <option selected></option>
+                            <option value="center"></option>
+                            <option value="right"></option>
+                            <option value="justify"></option>
+                        </select>
+                        <!-- 加入图片 -->
+                        <button class="ql-image" [title]="'Aligment3'"></button>
+                        <!-- 更改颜色 -->
+                        <select class="ql-color">
+                            <option selected="selected"></option>
+                            <option value="#e60000"></option>
+                            <option value="#ff9900"></option>
+                            <option value="#ffff00"></option>
+                            <option value="#008a00"></option>
+                            <option value="#0066cc"></option>
+                            <option value="#9933ff"></option>
+                            <option value="#ffffff"></option>
+                            <option value="#facccc"></option>
+                            <option value="#ffebcc"></option>
+                            <option value="#ffffcc"></option>
+                            <option value="#cce8cc"></option>
+                            <option value="#cce0f5"></option>
+                            <option value="#ebd6ff"></option>
+                            <option value="#bbbbbb"></option>
+                            <option value="#f06666"></option>
+                            <option value="#ffc266"></option>
+                            <option value="#ffff66"></option>
+                            <option value="#66b966"></option>
+                            <option value="#66a3e0"></option>
+                            <option value="#c285ff"></option>
+                            <option value="#888888"></option>
+                            <option value="#a10000"></option>
+                            <option value="#b26b00"></option>
+                            <option value="#b2b200"></option>
+                            <option value="#006100"></option>
+                            <option value="#0047b2"></option>
+                            <option value="#6b24b2"></option>
+                            <option value="#444444"></option>
+                            <option value="#5c0000"></option>
+                            <option value="#663d00"></option>
+                            <option value="#666600"></option>
+                            <option value="#003700"></option>
+                            <option value="#002966"></option>
+                            <option value="#3d1466"></option>
+                        </select>
+                        <!-- 字体大小 -->
+                        <select class="ql-size">
+                            <option value="small"></option>
+                            <option selected></option>
+                            <option value="large"></option>
+                            <option value="huge"></option>
+                        </select>
+                        <!--上标、下标按钮-->
+                        <button class="ql-script" value="sub"></button>
+                        <button class="ql-script" value="super"></button>
+                        <button type="button" class="ql-italic"></button>
+                        <!-- 下划线 -->
+                        <button type="button" class="ql-underline"></button>
+                        <!-- 删除线 -->
+                        <button type="button" class="ql-strike"></button>
+                        <!-- 列表显示 -->
+                        <button type="button" class="ql-list" value="ordered"></button>
+                        <!-- 缩进 -->
+                        <button type="button" class="ql-indent" value="-1"></button>
+                        <button type="button" class="ql-indent" value="+1"></button>
+                        <!-- 背景颜色 -->
+                        <select class="ql-background">
+                            <option value="#000000"></option>
+                            <option value="#e60000"></option>
+                            <option value="#ff9900"></option>
+                            <option value="#ffff00"></option>
+                            <option value="#008a00"></option>
+                            <option value="#0066cc"></option>
+                            <option value="#9933ff"></option>
+                            <option selected="selected"></option>
+                            <option value="#facccc"></option>
+                            <option value="#ffebcc"></option>
+                            <option value="#ffffcc"></option>
+                            <option value="#cce8cc"></option>
+                            <option value="#cce0f5"></option>
+                            <option value="#ebd6ff"></option>
+                            <option value="#bbbbbb"></option>
+                            <option value="#f06666"></option>
+                            <option value="#ffc266"></option>
+                            <option value="#ffff66"></option>
+                            <option value="#66b966"></option>
+                            <option value="#66a3e0"></option>
+                            <option value="#c285ff"></option>
+                            <option value="#888888"></option>
+                            <option value="#a10000"></option>
+                            <option value="#b26b00"></option>
+                            <option value="#b2b200"></option>
+                            <option value="#006100"></option>
+                            <option value="#0047b2"></option>
+                            <option value="#6b24b2"></option>
+                            <option value="#444444"></option>
+                            <option value="#5c0000"></option>
+                            <option value="#663d00"></option>
+                            <option value="#666600"></option>
+                            <option value="#003700"></option>
+                            <option value="#002966"></option>
+                            <option value="#3d1466"></option>
+                        </select>
+                        <!-- 字体 -->
+                        <select class="ql-font">
+                            <option selected="selected">标准字体</option>
+                            <option value="serif">衬线字体</option>
+                            <option value="monospace">等宽字体</option>
+                        </select>
+                        <!-- 清除按钮 -->
+                        <button type="button" class="ql-clean"></button>
+                        <!-- 链接 -->
+                        <button type="button" class="ql-link"></button>
+                    </div>
+                </quill-editor>
+                <div style="margin-top: 20px;text-align: center;">
+                    <button nz-button nzType="primary" (click)="loadOne()" [nzLoading]="isLoadingOne" class="button">发布</button>
                 </div>
-            </quill-editor>
-            <div style="margin-top: 20px;text-align: center;">
-                <button nz-button nzType="primary" (click)="loadOne()" [nzLoading]="isLoadingOne" class="button">发布</button>
             </div>
         </div>
     </div>
-  </div>
+
+    <div nz-col nzSpan="24" class="margin_top" style="text-align:center">
+        <div class="foot_bg" style=" background: url(http://www.wodsy.com/style/images/foot_border.png) #FFFFFF top repeat-x;height: 30px;margin-top:40px">
+        </div>
+        <div style="text-align:center">
+            <h2>
+                友情链接：文化和旅游部官网中国非物质文化遗产网中国文化传媒网中国文化报
+            </h2>
+            <h3 style="height:80px;margin:0 auto">
+                <img width="80" height="80" src="http://www.wodsy.com/images/portal/weixin.jpg">
+                <span>联系电话：131243242342</span>
+
+            </h3>
+            <h3>公司地址：北京市西城区新文化街56号 | 邮编：100032 | 来电垂询：010-63322600</h3>
+            <h3>Copyright © 2019 - 京ICP备13037645号-1， 北京市公安局海淀分局备案编号11010802016123 , 中传文创投资有限公司版权所有</h3>
+        </div>
+    </div>
+
 </div>

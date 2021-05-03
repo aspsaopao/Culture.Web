@@ -1,63 +1,93 @@
 <div nz-row>
     <div nz-col nzSpan="24" style="background-color: #8c2219;color:white;text-align:center;height:80px;">
-      <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
-          <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-              <a [routerLink]="['/index']" style="color: white;">首页</a>
-          </li>
-          <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
-              <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
-          </li>
-      </ul>
-      <div class="login {{userName !== '登录'?'user':''}}">
-          <a style="
+        <ul nz-menu nzMode="horizontal" style="background-color: #8c2219;height: 80px;color:white;">
+            <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/index']" style="color: white;">首页</a>
+            </li>
+            <!--<li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+                <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
+            </li>-->
+        </ul>
+        <div class="login {{userName !== '登录'?'user':''}}">
+            <a style="
           color: white;
           float: right;
           margin-top:10px;
           margin-right: 150px;
           height: 40px" (click)="login()">{{userName}}</a>
-          <div class="user_style">
-              <p style="margin-top: 5px;" (click)="goPersonalCenter()">个人中心</p>
-              <p (click)="output()">退出</p>
-          </div>
-      </div>
-  </div>
-  <div style="padding:15px;width: 1200px !important;margin: 0 auto;">
-    <nz-breadcrumb>
-        <nz-breadcrumb-item>
-            <i nz-icon nzType="home"></i>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-            <a><i nz-icon nzType="user"></i><span>首页</span></a>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-            手艺资讯
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-            资讯详情
-        </nz-breadcrumb-item>
-    </nz-breadcrumb>
-  </div>
-  <div nz-col nzSpan="24" class="margin_top">
-    <div class="content_div">
-        <div class="content">
-            <div>
-                <div class="content_title">
-                    {{data.title}}
-                </div>
-            </div>
-            <div class="header">
-                <p>时间:{{data.createTiem}}</p>
-                <p style="margin-left: 30px;">来源: 用户自己发布</p>
-            </div>
-            <div style="text-align:center">
-                <img [src]="getRemoteUrl(data.headImage.remoteFilePath,0)"
-                     class="img-responsive"
-                     style=" width: 750px;
-                                   height: 450px;" />
-            </div>
-            <div class="content_text" [innerHTML]="data.content" >
+            <div class="user_style">
+                <p style="margin-top: 5px;" (click)="goPersonalCenter()">个人中心</p>
+                <p (click)="output()">退出</p>
             </div>
         </div>
     </div>
-  </div>
+    <div style="padding:15px;width: 1200px !important;margin: 0 auto;">
+        <div nav>
+            <nz-breadcrumb>
+                <nz-breadcrumb-item>
+                    <a [routerLink]="['/index']">首页</a>
+                </nz-breadcrumb-item>
+                <!--<nz-breadcrumb-item>
+                    <a [routerLink]="['/app/report']" [queryParams]="{pageIndex:param.nowPage}">手艺资讯</a>
+                </nz-breadcrumb-item>-->
+                <nz-breadcrumb-item>
+                    资讯详情
+                </nz-breadcrumb-item>
+            </nz-breadcrumb>
+        </div>
+        <!--<nz-breadcrumb>
+            <nz-breadcrumb-item>
+                <i nz-icon nzType="home"></i>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                <a><i nz-icon nzType="user"></i><span>首页</span></a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                手艺资讯
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                资讯详情
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>-->
+    </div>
+    <div nz-col nzSpan="24" class="margin_top" style="text-align:center">
+        <div class="content_div">
+            <div class="content">
+                <div>
+                    <div class="content_title">
+                        {{data.title}}
+                    </div>
+                </div>
+                <div class="header">
+                    <p>时间:{{data.createTiem}}</p>
+                    <p style="margin-left: 30px;">来源: 用户发布</p>
+                </div>
+                <div style="text-align:center">
+                    <img [src]="getRemoteUrl(data.headImage.remoteFilePath,0)"
+                         class="img-responsive"
+                         style=" width: 750px;
+                                   height: 450px;" />
+                </div>
+                <div style="text-align:center" class="content_text" [innerHTML]="data.content">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div nz-col nzSpan="24" class="margin_top" style="text-align:center">
+        <div class="foot_bg" style=" background: url(http://www.wodsy.com/style/images/foot_border.png) #FFFFFF top repeat-x;height: 30px;margin-top:40px">
+        </div>
+        <div style="text-align:center">
+            <h2>
+                友情链接：文化和旅游部官网中国非物质文化遗产网中国文化传媒网中国文化报
+            </h2>
+            <h3 style="height:80px;margin:0 auto">
+                <img width="80" height="80" src="http://www.wodsy.com/images/portal/weixin.jpg">
+                <span>联系电话：131243242342</span>
+
+            </h3>
+            <h3>公司地址：北京市西城区新文化街56号 | 邮编：100032 | 来电垂询：010-63322600</h3>
+            <h3>Copyright © 2019 - 京ICP备13037645号-1， 北京市公安局海淀分局备案编号11010802016123 , 中传文创投资有限公司版权所有</h3>
+        </div>
+    </div>
+
 </div>

@@ -55,10 +55,8 @@ namespace Culture.Web.Areas.Index.Controllers
         [HttpPost]
         public async Task<InfoModel<LoginModel>> Login([FromBody] ParamForLogin model)
         {
-#if !DEBUG
             if (!await CodeImage.Ver(model.VerCode, HttpContext))
                 throw new Exception("验证码输入错误!");
-#endif
             var userInfo = await View_UsersContext.GetViewInfoWithPassID_PassWord(
                 HttpContext.RequestServices,
                 model.PassId,
@@ -103,7 +101,7 @@ namespace Culture.Web.Areas.Index.Controllers
             var userinfo= await UsersContext.SubWithBase(
                 HttpContext.RequestServices,
                 "",
-                "",
+                model.Name,
                 1,
                 "",
                 DateTime.Now,

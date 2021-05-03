@@ -4,9 +4,9 @@
           <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
               <a [routerLink]="['/index']" style="color: white;">首页</a>
           </li>
-          <li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
+          <!--<li nz-menu-item nzMatchRouter style=" line-height: 80px;font-size:18px ">
               <a [routerLink]="['/index/details']" style="color:white;">手艺资讯</a>
-          </li>
+          </li>-->
       </ul>
       <div style="    
       position: absolute;
@@ -22,36 +22,37 @@
       </div>
   </div>
   <div nz-col nzSpan="8" nzOffset="8" class="margin_top">
-    <form nz-form [formGroup]="vailForm" (ngSubmit)="submitForm()" autocomplete="off">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="email">账号</nz-form-label>
-        <nz-form-control [nzXs]="18" nzErrorTip="请输入账号">
-          <input nz-input formControlName="passid" placeholder="账号" [(ngModel)]="param.passId">
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="email">密码</nz-form-label>
-        <nz-form-control [nzXs]="18" nzErrorTip="请输入密码">
-          <input nz-input type="password" formControlName="password" placeholder="密码" [(ngModel)]="param.passWord">
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">验证码</nz-form-label>
-        <nz-form-control [nzXs]="18" nzErrorTip="请输入验证码">
-          <nz-input-group [nzAddOnAfter]="addOnBeforeTemplate">
-            <ng-template #addOnBeforeTemplate>
-              <img [src]="verImage" (click)="flushImage()" style="width:59px;" />
-            </ng-template>
-            <input nz-input type="text" formControlName="verImage" placeholder="验证码" [(ngModel)]="param.verCode">
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" [nzNoColon]="true"></nz-form-label>
-        <nz-form-control [nzXs]="18" nzErrorTip="请输入验证码">
-          <button nz-button type="submit">登录</button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
+      <form nz-form [formGroup]="vailForm" (ngSubmit)="submitForm()" autocomplete="off">
+          <nz-form-item>
+              <nz-form-label [nzSpan]="6" nzFor="email">账号</nz-form-label>
+              <nz-form-control [nzXs]="18" nzErrorTip="请输入账号">
+                  <input nz-input formControlName="passid" placeholder="账号" [(ngModel)]="param.passId">
+              </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+              <nz-form-label [nzSpan]="6" nzFor="email">密码</nz-form-label>
+              <nz-form-control [nzXs]="18" nzErrorTip="请输入密码">
+                  <input nz-input type="password" formControlName="password" placeholder="密码" [(ngModel)]="param.passWord">
+              </nz-form-control>
+          </nz-form-item>
+     
+          <nz-form-item>
+              <nz-form-label [nzSpan]="6">验证码</nz-form-label>
+              <nz-form-control [nzXs]="18" nzErrorTip="请输入验证码">
+                  <nz-input-group [nzAddOnAfter]="addOnBeforeTemplate">
+                      <ng-template #addOnBeforeTemplate>
+                          <img [src]="verImage" (click)="flushImage()" style="width:59px;" />
+                      </ng-template>
+                      <input nz-input type="text" formControlName="verImage" placeholder="验证码" [(ngModel)]="param.verCode">
+                  </nz-input-group>
+              </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+              <nz-form-label [nzSpan]="6" [nzNoColon]="true"></nz-form-label>
+              <nz-form-control [nzXs]="18" nzErrorTip="请输入验证码">
+                  <button nz-button type="submit">登录</button> <a (click)="gore()" style="margin:10px">没有账号？去注册</a>
+              </nz-form-control>
+          </nz-form-item>
+      </form>
   </div>
 </div>

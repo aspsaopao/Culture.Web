@@ -3,10 +3,12 @@ import { RouterModule } from '@angular/router';
 import { IndexComponent } from './index.component';
 import { NzGridModule, NzFormModule, NzInputModule, NzButtonModule,NzMenuModule } from 'ng-zorro-antd';
 import { FormModule } from '../framework/form.module';
+import { RegisterComponent } from './register.component';
 
 @NgModule({
   declarations: [
-    IndexComponent
+        IndexComponent,
+        RegisterComponent
   ],
   imports: [
     FormModule,
@@ -18,8 +20,13 @@ import { FormModule } from '../framework/form.module';
     RouterModule.forChild([
       {
         path: '',
-        component: IndexComponent
-      }
+        component: IndexComponent,
+        },
+        {
+            path: 'register',
+            component: RegisterComponent,
+
+        }
     ])
   ]
 })

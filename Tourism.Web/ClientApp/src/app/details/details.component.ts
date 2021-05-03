@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentClient, OutPutContentInfoItem } from '../client/api_contentclient';
+import { GeneralClient } from '../client/api_generalclient';
 import { IndexClient } from '../client/index_indexclient';
 import { ApiClientService } from '../framework/service/apiclient.service';
 import { GlobalmsgService } from '../framework/service/globalmsg.service';
@@ -88,7 +89,17 @@ export class DetailsComponent {
         this.router.navigate(['app/personalcenter']);
     }
     output() {
-        localStorage.removeItem('userInfo');
-        this.router.navigate(['app/login']);
+        this.msg.loading = true;
+        this.api.createClient(GeneralClient)
+            .loginOut()
+            .subscribe(
+                model => {
+                    localStorage.removeItem('userInfo');
+                    this.msg.loading = false;
+                    this.router.navigate(['index']);
+                },
+                e => {
+                    this.msg.showError(e);
+                });
     }
 }

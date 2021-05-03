@@ -134,6 +134,20 @@ export class GeneralClient extends ClientBase {
     }
 }
 
+export interface PageInfo {
+    count?: number | undefined;
+    index?: number | undefined;
+    pageSize?: number | undefined;
+    readonly pageCount?: number | undefined;
+}
+
+/** 举报参数 */
+export interface TableOutputReportInput {
+    pageInfo?: PageInfo | undefined;
+    /** 状态 */
+    status?: number | undefined;
+}
+
 export interface TempFileInfo {
     serverFileName?: string | undefined;
     localFileName?: string | undefined;
@@ -141,9 +155,65 @@ export interface TempFileInfo {
     readonly remoteFilePath?: string | undefined;
 }
 
+/** 名称-类型 */
+export interface Int32StringTypeForName {
+    /** id */
+    id?: number | undefined;
+    /** 内容 */
+    name?: string | undefined;
+}
+
+/** 首页返回列表 */
+export interface OutPutContentInfoItem {
+    /** id */
+    contentId?: string | undefined;
+    /** 标题 */
+    title?: string | undefined;
+    /** 内容 */
+    content?: string | undefined;
+    /** 发布日期 */
+    createTiem?: string | undefined;
+    headImage?: TempFileInfo | undefined;
+    /** 介绍 */
+    introduce?: string | undefined;
+    /** 审核状态 */
+    status?: number | undefined;
+    /** 状态名称 */
+    ststusName?: string | undefined;
+    /** 审核状态列表 */
+    examineList?: Int32StringTypeForName[] | undefined;
+}
+
+/** 举报信息 */
+export interface TableOutputReportInfo {
+    /** 举报信息列表 */
+    reportList?: OutPutContentInfoItem[] | undefined;
+    page?: PageInfo | undefined;
+    /** 审核状态列表 */
+    examineList?: Int32StringTypeForName[] | undefined;
+}
+
+/** 模型 */
+export interface TableOutputReportInfoInfoModel {
+    data?: TableOutputReportInfo | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
 /** 模型 */
 export interface TempFileInfoInfoModel {
     data?: TempFileInfo | undefined;
+    cacheKey?: string | undefined;
+    isSuccess?: boolean | undefined;
+    message?: string | undefined;
+    code?: number | undefined;
+}
+
+/** 模型 */
+export interface OutPutContentInfoItemInfoModel {
+    data?: OutPutContentInfoItem | undefined;
     cacheKey?: string | undefined;
     isSuccess?: boolean | undefined;
     message?: string | undefined;
@@ -159,6 +229,8 @@ export interface InputAddEditForContent {
     headImage?: TempFileInfo | undefined;
     /** 活动详情 */
     details?: string | undefined;
+    /** 介绍 */
+    introduce?: string | undefined;
 }
 
 /** 模型 */
@@ -200,40 +272,11 @@ export interface StringInfoModel {
     code?: number | undefined;
 }
 
-export interface PageInfo {
-    count?: number | undefined;
-    index?: number | undefined;
-    pageSize?: number | undefined;
-    readonly pageCount?: number | undefined;
-}
-
-/** 首页返回列表 */
-export interface OutPutContentInfoItem {
-    /** id */
-    contentId?: string | undefined;
-    /** 标题 */
-    title?: string | undefined;
-    /** 内容 */
-    content?: string | undefined;
-    /** 发布日期 */
-    createTiem?: string | undefined;
-    headImage?: TempFileInfo | undefined;
-}
-
 /** 列表模型 */
 export interface OutPutContentInfoItemInfoModelList {
     isNext?: boolean | undefined;
     pageInfo?: PageInfo | undefined;
     listData?: OutPutContentInfoItem[] | undefined;
-    cacheKey?: string | undefined;
-    isSuccess?: boolean | undefined;
-    message?: string | undefined;
-    code?: number | undefined;
-}
-
-/** 模型 */
-export interface OutPutContentInfoItemInfoModel {
-    data?: OutPutContentInfoItem | undefined;
     cacheKey?: string | undefined;
     isSuccess?: boolean | undefined;
     message?: string | undefined;
@@ -267,6 +310,8 @@ export interface ParamForLogin {
     passId: string;
     /** 登录密码 */
     passWord: string;
+    /** 登录密码 */
+    name: string;
     /** 验证码 */
     verCode: string;
 }

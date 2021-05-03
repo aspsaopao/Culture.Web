@@ -24,6 +24,11 @@ namespace Culture.STD.Models.Users
         public string PassWord { get; set; }
 
         /// <summary>
+        /// 用户名字
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// 验证码
         /// </summary>
         [Required(ErrorMessage ="验证码必须填写")]

@@ -16,6 +16,8 @@ using Culture.STD.Models;
 using Culture.Web.FilterController;
 using Culture.Command.Components;
 using Culture.STD.Models.Content;
+using Tourism.DataTypeOper;
+using Culture.STD;
 
 namespace Culture.Web.Areas.Api.Controllers
 {
@@ -26,7 +28,53 @@ namespace Culture.Web.Areas.Api.Controllers
     [Route("Api/[controller]/[action]")]
     public class ContentController : RuleController
     {
-     
+        /// <summary>
+        /// 获取列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModel<TableOutputReportInfo>> GetListAsync([FromBody] TableOutputReportInput model)
+        {
+
+            var list = await ContentContext.GetListPageWithStatus(
+                HttpContext.RequestServices,
+                model.PageInfo,
+                model.Status);
+
+            return new InfoModel<TableOutputReportInfo>()
+            {
+                Data = new TableOutputReportInfo()
+                { 
+                
+                    ReportList = list.ConvertAll(T => {
+                        return new OutPutContentInfoItem()
+                        {
+                            Introduce = T.GetEntity().Introduce,
+                            Content = T.GetEntity().Content.HtmlDecode(),
+                            ContentId = T.GetKey(),
+                            CreateTiem = T.GetEntity().CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                            HeadImage = new TempFileInfo()
+                            {
+                                ServerDirPath = T.GetDownFileDir(),
+                                ServerFileName = T.GetEntity().Image,
+                            },
+                            Title = T.GetEntity().Title,
+                            Status = T.GetEntity().Status,
+                            StstusName = HttpContext.RequestServices.GetDataTypeForConstant<ContentStatusType>().FindDataTypeForValue(T.GetEntity().Status)
+                        };
+                    }),
+                    Page= model.PageInfo,
+                    ExamineList = HttpContext.RequestServices.GetDataTypeForConstant<ContentStatusType>().DataType.ConvertAll(T =>
+                    {
+                        return new TypeForName<int, string>()
+                        {
+                            Id = T.Id,
+                            Name = T.Value
+                        };
+                    }),
+                } ,
+            };
+        }
 
         /// <summary>
         /// 上传活动宣传图临时文件
@@ -53,6 +101,42 @@ namespace Culture.Web.Areas.Api.Controllers
             };
         }
 
+        /// <summary>
+        /// 获取信息详情
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<InfoModel<OutPutContentInfoItem>> GetInfo([FromForm] string Id)
+        {
+            var T = await ContentContext.GetInfo(HttpContext.RequestServices, Id);
+            T.Ver();
+            return new InfoModel<OutPutContentInfoItem>()
+            {
+                Data = new OutPutContentInfoItem()
+                {
+                    Content = T.GetEntity().Content.HtmlDecode(),
+                    ContentId = T.GetKey(),
+                    CreateTiem = T.GetEntity().CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                    HeadImage = new TempFileInfo()
+                    {
+                        ServerDirPath = T.GetDownFileDir(),
+                        ServerFileName = T.GetEntity().Image,
+                    },
+                    Title = T.GetEntity().Title,
+                    Status = T.GetEntity().Status,
+                    Introduce = T.GetEntity().Introduce,
+                    ExamineList = HttpContext.RequestServices.GetDataTypeForConstant<ContentStatusType>().DataType.ConvertAll(T =>
+                    {
+                        return new TypeForName<int, string>()
+                        {
+                            Id = T.Id,
+                            Name = T.Value
+                        };
+                    }),
+                }
+            };
+        }
 
         /// <summary>
         /// 上传内容
